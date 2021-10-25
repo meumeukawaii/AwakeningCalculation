@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset='utf-8'/>
+        <meta name="author" content="meumeukawaii">
+        <title>라테일 각성 계산기</title>
+        <script src="./script/calculate.js"></script>
+        <script src="./script/dungeon.js"></script>
+    </head>
+    <body>
+        <h1>각성 계산기</h1>
+        기본 세팅은 메~부 1회입니다.
+        <p>각성 레벨  
+            <input type="number" name="level" min="1" max="100" style="width: 70px;" value="1">, 
+            <input type="number" name="levelPercent" step="0.01" min="0" max= "100" style="width: 70px;" value="1">%, 횟수 
+            <input type="number" name="playtime" min="1" max="1000" style="width: 70px;" value="1">
+            <input type="number" name="questUp" min="0" style="width: 70px;" value="100">
+        </p>
+        <section>
+            <div style="width:600px; float:left;">
+                <!--<form action="calculate.js" method="get">-->
+                    <!--표 만드는 코드-->
+                    <table border="1" style="width:90%">
+                        <script>
+                            makeTable();                 
+                        </script>   
+                        <!--<input type="submit" value="결과"> -->
+                    </table>
+                <!--표 만드는 코드-->   
+                <!--</form>-->
+                                
+            </div>
+            <div>
+
+                <!--<button onclick='calculate()'>확인</button>-->
+            </div>
+        </section>
+    </body>
+</html>
