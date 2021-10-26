@@ -111,6 +111,7 @@ function calculate(){
         
         for(i = level[0].value; i < Level.length; i++){ //한번 레벨 올라갔으므로 +1 된 상태임
             if(exp_all < Level[i][1]){
+                nextExp = exp_all
                 break;
             }
             else{
