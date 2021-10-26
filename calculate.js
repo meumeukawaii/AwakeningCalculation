@@ -121,5 +121,5 @@ function calculate(){
     }
     var resultLevel = level[0].value;
     var resultLevelPercent = (Level[level[0].value - 1][1] - nextExp) / Level[level[0].value - 1][1] * 100;
-    alert("Lv." + resultLevel + ", " + resultLevelPercent + "%");
+    document.write("Lv." + resultLevel + ", " + resultLevelPercent + "%");
 }
