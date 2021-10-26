@@ -42,7 +42,6 @@ function makeTable(){
     }
 
     //숫자 세는 스크립트 https://ungdoli0916.tistory.com/448
-    calculate()
     //document.write("<br>" + level[0].value);
 
 }
