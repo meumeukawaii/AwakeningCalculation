@@ -57,11 +57,12 @@ function calculate(){
     document.write("<br>" + levelPercent[0].value);
     document.write("<br>" + playtime[0].value + "<br>");
     document.write("<br>" + questUp[0].value / 100 + "<br>");*/
-
+    
     var expNormal=0;
     var expMiddle=0;
     var expBoss=0;
     var expDayq=0;
+    var levelUp = 0;
     //잡몹
     
     for(let i in Dungeon){
@@ -103,23 +104,23 @@ function calculate(){
         nextExp += exp_all
         exp_all = 0;
         nextExp = 0;
-        level[0].value++;
+        levelUp++;
     }
     else{
         exp_all = exp_all - nextExp;
-        level[0].value++;
+        levelUp++;
         
-        for(i = level[0].value-1; i < Level.length; i++){
+        for(i = level[0].value; i < Level.length; i++){ //한번 레벨 올라갔으므로 +1 된 상태임
             if(exp_all < Level[i][1]){
                 break;
             }
             else{
                 exp_all = exp_all - Level[i][1];
-                level[0].value++;
+                levelUp++;
             }
         }
     }
-    var resultLevel = level[0].value;
-    var resultLevelPercent = (Level[level[0].value - 1][1] - nextExp) / Level[level[0].value - 1][1] * 100;
+    var resultLevel = level[0].value - (levelUp * -1);
+    var resultLevelPercent = (Level[resultLevel - 1][1] - nextExp) / Level[resultLevel - 1][1] * 100;
     document.write("Lv." + resultLevel + ", " + resultLevelPercent + "%");
 }
