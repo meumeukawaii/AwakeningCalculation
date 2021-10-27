@@ -17,6 +17,9 @@ function makeTable(){
             "<th>",
                 '<input type="checkbox" name="'+ Dungeon[i][0] +'Dayq" value="'+ Dungeon[i][5] +'" checked> 일퀘',
             "</th>",
+            "<th>",
+            '<input type="checkbox" name="'+ Dungeon[i][0] +'Infinityq" value="'+ Dungeon[i][5] +'"> 반복퀘',
+            "</th>",
         "</tr>"
         );
         }
@@ -35,6 +38,9 @@ function makeTable(){
             "</th>",
             "<th>",
                 '<input type="checkbox" name="'+ Dungeon[i][0] +'Dayq" value="'+ Dungeon[i][5] +'"> 일퀘',
+            "</th>",
+            "<th>",
+            '<input type="checkbox" name="'+ Dungeon[i][0] +'Infinityq" value="'+ Dungeon[i][5] +'"> 반복퀘',
             "</th>",
         "</tr>"
             );
@@ -61,6 +67,7 @@ function calculate(){
     var expMiddle=0;
     var expBoss=0;
     var expDayq=0;
+    var expInfinityq=0;
     var levelUp = 0;
 
 
@@ -91,8 +98,14 @@ function calculate(){
             expDayq += Dungeon[i][5];
         }
     }
+    //반복퀘
+    for(let i in Dungeon){
+        if(document.getElementsByName(Dungeon[i][0]+"Infinityq")[0].checked == true){
+            expInfinityq += Dungeon[i][6];
+        }
+    }
 
-    var exp_all = (expNormal + expMiddle + expBoss + expDayq) * (1 + questUp[0].value / 100) * playtime[0].value;   //퀘스트 종료 후 얻는 경험치
+    var exp_all = (expNormal + expMiddle + expBoss + expDayq + expInfinityq) * (1 + questUp[0].value / 100) * playtime[0].value;   //퀘스트 종료 후 얻는 경험치
 
     var nextExp = Level[level[0].value - 1][1] - (Level[level[0].value - 1][1] * (levelPercent[0].value / 100));   //현재 다음렙가기위해 필요한 경험치
 
