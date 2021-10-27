@@ -6,33 +6,53 @@
         <title>라테일 각성 계산기</title>
         <script src="./calculate.js"></script>
         <script src="./dungeon.js"></script>
+        <script src="./system.js"></script>
     </head>
     <body>
-        <h1>각성 계산기</h1>
-        기본 세팅은 관~부 1회입니다.
-        <p>
-            각성 레벨 <input type="number" name="level" min="1" max="100" style="width: 70px;">, 
-            <input type="number" name="levelPercent" step="0.01" min="0" max= "100" style="width: 70px;">%, 횟수 
-            <input type="number" name="playtime" min="1" max="1000" style="width: 70px;">,
-            퀘보<input type="number" name="questUp" min="0" style="width: 70px;">                
-            <button onclick='calculate()'>확인(각성)</button>
-        </p>
-        <p>
-            초월 레벨 <input type="number" name="transcendenceLevel" min="1" max="9999" style="width: 70px;">, 
-            <input type="number" name="transcendenceLevelPercent" step="0.01" min="0" max= "100" style="width: 70px;">%
-            <button onclick='transcendenceUp()'>확인(초월)</button>
-        </p>
+        <head>
+            <h1>각성 계산기</h1>
+            기본 세팅은 관~부 1회입니다.
+            <div>
+                <p>
+                    각성 레벨 <input type="number" name="level" min="1" max="100" style="width: 70px;">, 
+                    <input type="number" name="levelPercent" step="0.01" min="0" max= "100" style="width: 70px;">%, 횟수 
+                    <input type="number" name="playtime" min="1" max="1000" style="width: 70px;">,
+                    퀘보<input type="number" name="questUp" min="0" style="width: 70px;">                
+                    <button onclick='calculate()'>확인(각성)</button>
+                </p>
+                <p>
+                    초월 레벨 <input type="number" name="transcendenceLevel" min="1" max="9999" style="width: 70px;">, 
+                    <input type="number" name="transcendenceLevelPercent" step="0.01" min="0" max= "100" style="width: 70px;">%
+                    <button onclick='transcendenceUp()'>확인(초월)</button>
+                </p>
+            </div>
+        </head>
         <section>
-            <div style="width:600px; float:left;">
+            <span style="width:700px; float:left;">
                     <!--표 만드는 코드-->
                     <table border="1" style="width:90%">
+                        <tr>
+                            <td></td>
+                            <td><center><button onclick='allSelect("Normal")'>모두 선택</button></center></td>
+                            <td><center><button onclick='allSelect("Middle")'>모두 선택</button></center></td>
+                            <td><center><button onclick='allSelect("Boss")'>모두 선택</button></center></td>
+                            <td><center><button onclick='allSelect("Dayq")'>모두 선택</button></center></td>
+                            <td><center><button onclick='allSelect("Infinityq")'>모두 선택</button></center></td>
+                        </tr>
                         <script>
                             makeTable();                 
                         </script>   
                         <!--<input type="submit" value="결과"> -->
                     </table>
                 <!--표 만드는 코드-->   
-            </div>
+                </span>
+                <span>
+                    <button onclick='reset("Normal")'>잡몹 초기화</button><br>
+                    <button onclick='reset("Middle")'>중보 초기화</button><br>
+                    <button onclick='reset("Boss")'>보스 초기화</button><br>
+                    <button onclick='reset("Dayq")'>일퀘 초기화</button><br>
+                    <button onclick='reset("Infinityq")'>반복퀘 초기화</button><br>
+                </span>
         </section>
     </body>
 </html>
