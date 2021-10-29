@@ -4,7 +4,6 @@
         <meta charset='utf-8'/>
         <meta name="author" content="meumeukawaii">
         <title>라테일 각성 계산기</title>
-        <script src="./calculate.js"></script>
         <script src="./dungeon.js"></script>
         <script src="./system.js"></script>
     </head>
@@ -29,16 +28,16 @@
             </div>
         </head>
         <section>
-            <span style="width:700px; float:left;">
+            <span style="width:650px; float:left;">
                     <!--표 만드는 코드-->
-                    <table border="1" style="width:90%">
+                    <table border="1" style="width:95%">
                         <tr>
                             <td></td>
-                            <td><center><button onclick='allSelect("Normal")'>모두 선택</button></center></td>
-                            <td><center><button onclick='allSelect("Middle")'>모두 선택</button></center></td>
-                            <td><center><button onclick='allSelect("Boss")'>모두 선택</button></center></td>
-                            <td><center><button onclick='allSelect("Dayq")'>모두 선택</button></center></td>
-                            <td><center><button onclick='allSelect("Infinityq")'>모두 선택</button></center></td>
+                            <td><center><button style="width:81px;" onclick='allSelect("Normal")'>모두 선택</button><br><button onclick='reset("Normal")' style="width:81px;">리셋</button><br></center></td>
+                            <td><center><button style="width:81px;" onclick='allSelect("Middle")'>모두 선택</button><br><button onclick='reset("Middle")' style="width:81px;">리셋</button></center></td>
+                            <td><center><button style="width:81px;" onclick='allSelect("Boss")'>모두 선택</button><br><button onclick='reset("Boss")' style="width:81px;">리셋</button></center></td>
+                            <td><center><button style="width:81px;" onclick='allSelect("Dayq")'>모두 선택</button><br><button onclick='reset("Dayq")' style="width:81px;">리셋</button></center></td>
+                            <td><center><button style="width:81px;" onclick='allSelect("Infinityq")'>모두 선택</button><br><button onclick='reset("Infinityq")' style="width:81px;">리셋</button></center></td>
                         </tr>
                         <script>
                             makeTable();                 
@@ -48,11 +47,8 @@
                 <!--표 만드는 코드-->   
                 </span>
                 <span>
-                    <button onclick='reset("Normal")'>잡몹 초기화</button><br>
-                    <button onclick='reset("Middle")'>중보 초기화</button><br>
-                    <button onclick='reset("Boss")'>보스 초기화</button><br>
-                    <button onclick='reset("Dayq")'>일퀘 초기화</button><br>
-                    <button onclick='reset("Infinityq")'>반복퀘 초기화</button><br>
+                    <button onclick='SelectDungeon(Dungeon.length)'>관~부 선택하기</button><br>
+                    <button onclick='SelectDungeon(10)'>일퀘런 선택하기</button><br>
                 </span>
         </section>
     </body>
