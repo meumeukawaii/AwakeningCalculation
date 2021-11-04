@@ -167,6 +167,49 @@ function transcendenceUp(){
     alert("Lv." + resultLevel + ", " + resultLevelPercent + "%");
 }
 
+function transcendenceAll(){
+    var transcendenceLevel = document.getElementsByName("transcendenceLevel");                //내 초월 레벨
+    var transcendenceLevelPercent = document.getElementsByName("transcendenceLevelPercent");  //내 초월 레벨 %
+    var playtime = document.getElementsByName("playtime");          //도는 횟수
+    var questUp = document.getElementsByName("questUp");            //퀘보업
+
+    var expNormal=0;    //잡몹 경험치 저장소
+    var expMiddle=0;    //중보 경험치 저장소
+    var expBoss=0;      //보스 경험치 저장소      
+    var expDayq=0;      //일퀘 경험치 저장소
+    var expInfinityq=0; //반복퀘 경험치 저장소
+
+
+    //잡몹
+    expNormal = ExpAdd("Normal", 2);
+    //중보
+    expMiddle = ExpAdd("Middle", 3);
+    //보스
+    expBoss = ExpAdd("Boss", 4);
+    //일퀘
+    expDayq = ExpAdd("Dayq", 5);
+    //반복퀘
+    expInfinityq = ExpAdd("Infinityq", 6);
+
+    var exp_all = (expNormal + expMiddle + expBoss + expDayq + expInfinityq) * (1 + questUp[0].value / 100) * playtime[0].value;   //퀘스트 종료 후 얻는 경험치
+    var nowExp = 0; //현재 경험치
+    var allExp = 0; //1~9999까지의 경험치량
+
+    //1~9999까지의 경험치량
+    for(i = 0; i < 9998; i++){ //레벨 오르는 횟수는 1부터 9999까지 즉 9998번 올라가면 되므로 9998임
+        allExp += 40000000000 + i * 100000000;
+    }
+
+    //지금까지 얻은 경험치량
+    for(i = 0; i < transcendenceLevel[0].value - 1; i++){   //내 레벨이 1일때를 생각해보자 -1 없으면 이 계산기 결과로는 1레벨에서 얻은 경험치는 400억이 되버림
+        nowExp += 40000000000 + i * 100000000;
+    }
+
+    nowExp += transcendenceLevelPercent[0].value / 100 * (40000000000 + 100000000 * transcendenceLevel[0].value);   //초월렙 %까지 추가한 곳 레벨1의 50%를 생각할것
+    nowExp += exp_all;  //퀘스트 종료 후에 얻은 곳 까지 포함한것
+
+    alert('9999까지 도달한 정도 = ' + nowExp/allExp*100 + '%');
+}
 
 //해당 체크박스 초기화 하는 함수
 function reset(name) {
