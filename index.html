@@ -12,12 +12,11 @@
             <h1>각성 계산기</h1>
             기본 세팅은 관~부 1회입니다.<br>
             표시가 제대로 되지 않는다면 인터넷 사용기록에서 쿠키를 지워주세요.<br>
-            추가할 만한 내용은 <a href="https://gall.dcinside.com/mgallery/board/lists/?id=shynick">샤이닉 마이너 갤러리<a>에서 추천해주세요<br>
             <div>
                 <p>
                     각성 레벨 <input type="number" name="level" min="1" max="100" style="width: 70px;">, 
                     <input type="number" name="levelPercent" step="0.01" min="0" max= "100" style="width: 70px;">%, 횟수 
-                    <input type="number" name="playtime" min="1" max="1000" style="width: 70px;">,
+                    <input type="number" name="playtime" min="0" max="1000" style="width: 70px;">,
                     퀘보<input type="number" name="questUp" min="0" style="width: 70px;">                
                     <button onclick='calculate()'>확인(각성)</button>
                 </p>
@@ -25,6 +24,7 @@
                     초월 레벨 <input type="number" name="transcendenceLevel" min="1" max="9999" style="width: 70px;">, 
                     <input type="number" name="transcendenceLevelPercent" step="0.01" min="0" max= "100" style="width: 70px;">%
                     <button onclick='transcendenceUp()'>확인(초월)</button>
+                    <button onclick='transcendenceAll()'>전체초월은?</button>
                 </p>
             </div>
         </head>
