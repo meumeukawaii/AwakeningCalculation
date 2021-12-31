@@ -34,11 +34,11 @@
                     <table border="1" style="width:95%">
                         <tr>
                             <td></td>
-                            <td><center><button style="width:81px;" onclick='allSelect("Normal")'>모두 선택</button><br><button onclick='reset("Normal")' style="width:81px;">리셋</button><br></center></td>
-                            <td><center><button style="width:81px;" onclick='allSelect("Middle")'>모두 선택</button><br><button onclick='reset("Middle")' style="width:81px;">리셋</button></center></td>
-                            <td><center><button style="width:81px;" onclick='allSelect("Boss")'>모두 선택</button><br><button onclick='reset("Boss")' style="width:81px;">리셋</button></center></td>
-                            <td><center><button style="width:81px;" onclick='allSelect("Dayq")'>모두 선택</button><br><button onclick='reset("Dayq")' style="width:81px;">리셋</button></center></td>
-                            <td><center><button style="width:81px;" onclick='allSelect("Infinityq")'>모두 선택</button><br><button onclick='reset("Infinityq")' style="width:81px;">리셋</button></center></td>
+                            <td><center><button style="width:81px;" onclick='wantSelect("Normal", 9999)'>모두 선택</button><br><button onclick='reset("Normal")' style="width:81px;">리셋</button><br></center></td>
+                            <td><center><button style="width:81px;" onclick='wantSelect("Middle", 9999)'>모두 선택</button><br><button onclick='reset("Middle")' style="width:81px;">리셋</button></center></td>
+                            <td><center><button style="width:81px;" onclick='wantSelect("Boss", 9999)'>모두 선택</button><br><button onclick='reset("Boss")' style="width:81px;">리셋</button></center></td>
+                            <td><center><button style="width:81px;" onclick='wantSelect("Dayq", 9999)'>모두 선택</button><br><button onclick='reset("Dayq")' style="width:81px;">리셋</button></center></td>
+                            <td><center><button style="width:81px;" onclick='wantSelect("Infinityq", 9999)'>모두 선택</button><br><button onclick='reset("Infinityq")' style="width:81px;">리셋</button></center></td>
                         </tr>
                         <script>
                             makeTable();                 
@@ -48,8 +48,19 @@
                 <!--표 만드는 코드-->   
                 </span>
                 <span>
-                    <button onclick='SelectDungeon(Dungeon.length)'>연~부 선택하기</button><br>
-                    <button onclick='SelectDungeon(10)'>일퀘런 선택하기</button><br>
+                    <p>
+                        <button onclick='SelectMadenDungeon(Dungeon.length)'>연~부 선택하기</button><br>
+                        <button onclick='SelectMadenDungeon(10)'>일퀘런 선택하기</button><br>
+                        초월 <input type="number" name="questLevel" min="0" max="9999" style="width: 70px;"><br>
+                        이하의 던전 체크<br>
+                        <button onclick='wantSelect("Normal", 0)' style="width:81px;">잡몹</button><br>
+                        <button onclick='wantSelect("Middle", 0)' style="width:81px;">중보</button><br>
+                        <button onclick='wantSelect("Boss", 0)' style="width:81px;">보스</button><br>
+                        <button onclick='wantSelect("Dayq", 0)' style="width:81px;">일퀘</button><br>
+                        <button onclick='wantSelect("Infinityq", 0)' style="width:81px;">반복퀘</button><br>
+                    </p>
+
+                    
                 </span>
         </section>
     </body>
