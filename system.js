@@ -25,22 +25,22 @@ function makeTable(){
         }
         else{
             document.write(
-            "<tr>",
+        "<tr>",
             "<th>" + Dungeon[i][1] + "</th>",
             "<th>",
-                '<input type="checkbox" name="'+ Dungeon[i][0] +'Normal" value="'+ Dungeon[i][2] +'" checked> 잡몹',
+                '<input type="checkbox" id = ' + Dungeon[i][7] + '" name="'+ Dungeon[i][0] +'Normal" value="'+ Dungeon[i][2] +'" checked> 잡몹',
             "</th>",
             "<th>",
-                '<input type="checkbox" name="'+ Dungeon[i][0] +'Middle" value="'+ Dungeon[i][3] +'" checked> 중보',
+                '<input type="checkbox" id = ' + Dungeon[i][7] + '" name="'+ Dungeon[i][0] +'Middle" value="'+ Dungeon[i][3] +'" checked> 중보',
             "</th>",
             "<th>",
-                '<input type="checkbox" name="'+ Dungeon[i][0] +'Boss" value="'+ Dungeon[i][4] +'" checked> 보스',
+                '<input type="checkbox" id = ' + Dungeon[i][7] + '" name="'+ Dungeon[i][0] +'Boss" value="'+ Dungeon[i][4] +'" checked> 보스',
             "</th>",
             "<th>",
-                '<input type="checkbox" name="'+ Dungeon[i][0] +'Dayq" value="'+ Dungeon[i][5] +'"> 일퀘',
+                '<input type="checkbox" id = ' + Dungeon[i][7] + '" name="'+ Dungeon[i][0] +'Dayq" value="'+ Dungeon[i][5] +'"> 일퀘',
             "</th>",
             "<th>",
-            '<input type="checkbox" name="'+ Dungeon[i][0] +'Infinityq" value="'+ Dungeon[i][5] +'"> 반복퀘',
+            '<input type="checkbox" id = ' + Dungeon[i][7] + '" name="'+ Dungeon[i][0] +'Infinityq" value="'+ Dungeon[i][5] +'"> 반복퀘',
             "</th>",
         "</tr>"
             );
@@ -218,10 +218,36 @@ function reset(name) {
     }
 }
 
-//해당 체크박스 모두 선택하는 함수
-function allSelect(name){
-    for(let i in Dungeon){
-        document.getElementsByName(Dungeon[i][0]+name)[0].checked = true;
+//해당 체크박스 선택하는 함수 - 언젠가 실력 길러서 수정해주자
+function wantSelect(name, num){
+    if (num == 9999){ //표 안의 전체선택 시
+        for(let i in Dungeon){
+            document.getElementsByName(Dungeon[i][0]+name)[0].checked = true;      
+        }
+    }
+    else if(num == 0){//우측 레벨별 선택시
+        reset(name);
+
+        var questLevel = document.getElementsByName("questLevel");                //선택된 초월 레벨
+
+        if(name == "Dayq"){
+            t = 0;  //일퀘 최대횟수 카운팅용
+            for(let i in Dungeon){
+                if(Dungeon[i][7] <= questLevel[0].value){
+                    document.getElementsByName(Dungeon[i][0]+name)[0].checked = true;
+                    t++;
+                    if(t == 10)
+                    break;
+                }
+            }
+        }
+        else{
+            for(let i in Dungeon){
+                if(Dungeon[i][7] <= questLevel[0].value){
+                    document.getElementsByName(Dungeon[i][0]+name)[0].checked = true;
+                }
+            }
+        }
     }
 }
 
@@ -238,7 +264,7 @@ function ExpAdd(name, num){
 }
 
 //특정 던전 선택하는 곳
-function SelectDungeon(num){
+function SelectMadenDungeon(num){
     reset("Normal");
     reset("Middle");
     reset("Boss");
