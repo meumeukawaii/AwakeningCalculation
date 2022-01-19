@@ -456,7 +456,7 @@ function howManyPlayTranscendence(num){
     if(num == 0)    //부캐런이라서 2회당 1캐릭임
         alert("초월 " + wanttranscendenceLevel[0].value + "까지 부캐런 " +repeat + "회 (" + repeat/2 + "캐릭)");
     else if(num == 1)   //일퀘런이라서 캐릭 수는 필요 없음
-        alert("초월 " + wanttranscendenceLevel[0].value + "까지 부캐런 " +repeat + "회");
+        alert("초월 " + wanttranscendenceLevel[0].value + "까지 일퀘런 " +repeat + "회");
 }
 
 //원하는 곳까지 자동으로 계산해주는 함수(각성)
