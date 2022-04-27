@@ -528,4 +528,5 @@ function howManyPlayAwakening(num){
         alert("각성 " + wantAwakeningLevel[0].value + "까지 부캐런 " + repeat + "회 (" + repeat/2 + "캐릭)");
     else if(num == 1)   //일퀘런이라서 캐릭 수는 필요 없음
         alert("각성 " + wantAwakeningLevel[0].value + "까지 일퀘런 " + repeat + "회");
+    
 }
