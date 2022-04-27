@@ -105,9 +105,9 @@ function awakeningUp(num){
     }
     var resultLevel = level[0].value - (levelUp * -1);
     
-    if(resultLevel >= 100){
+    if(resultLevel >= Level.length){
         resultLevelPercent = 0;
-        resultLevel = 100;
+        resultLevel = Level.length;
     }
     else{
         var resultLevelPercent = (Level[resultLevel - 1][1] - nextExp) / Level[resultLevel - 1][1] * 100;
@@ -229,8 +229,8 @@ function awakeningAll(){
     var allExp = 0; //1~100까지의 경험치량
     var result = 0; //도달한 각성렙의 결과
 
-    //1~100까지의 경험치량
-    for(i = 0; i < 99; i++){ //Level[i][1]에서 Level[99][1]의 경험치는 100에서 다음으로 가기 위한 경험치량을 임의표기한것임 99가 들어가면 안됨
+    //1~105까지의 경험치량
+    for(i = 0; i < Level.length - 1; i++){ //Level[i][1]에서 Level[99][1]의 경험치는 100에서 다음으로 가기 위한 경험치량을 임의표기한것임 99가 들어가면 안됨
         allExp += Level[i][1];
     }
 
@@ -247,7 +247,7 @@ function awakeningAll(){
     }
     
 
-    alert('각성 100까지 도달한 정도 = ' + result + '%');
+    alert('각성 105까지 도달한 정도 = ' + result + '%');
 }
 
 //전체 초월레벨 계산하는 함수
@@ -319,6 +319,10 @@ function wantSelect(name, num){
 
         var questLevel = document.getElementsByName("questLevel");                //선택된 초월 레벨
 
+        if(questLevel >= 9999)
+        {
+            questLevel = 9999;
+        }
         if(name == "Dayq" || name =="InfinityqDayq"){
             if(name == "InfinityqDayq"){
                 name = "Infinityq";
@@ -484,8 +488,8 @@ function howManyPlayAwakening(num){
     var saveAwakeningLevel = awakeningLevel[0].value;                   //각성렙 세이브용
     var saveAwakeningLevelPercent = awakeningLevelPercent[0].value;     //각성렙 세이브용
 
-    if(wantAwakeningLevel[0].value > 100){
-        wantAwakeningLevel[0].value = 100;
+    if(wantAwakeningLevel[0].value > Level.length){
+        wantAwakeningLevel[0].value = Level.length;
         alert("그러다 사이트 팅겨요...")
     }
 
