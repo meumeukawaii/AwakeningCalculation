@@ -4,32 +4,32 @@
         <meta charset='utf-8'/>
         <meta name="author" content="meumeukawaii">
         <title>라테일 각성 계산기</title>
-        <script src="./dungeon.js"></script>
-        <script src="./system.js"></script>
+        <script src="./dungeon_exp.js"></script>
+        <script src="./system_exp.js"></script>
     </head>
     <body>
         <head>
             <h1>각성 계산기</h1>
-            <del>기본 세팅은 카~부 1회입니다.</del><br>
-            <del>작동이 제대로 되지 않는다면 인터넷 사용기록에서 쿠키를 지워주세요.</del><br>
-            <del>각성 자동계산 기능은 자신의 초월레벨을 입력해놔야 정상 작동 됩니다.</del> <br>
-            ㅅㅂ 다 바꿔야되네 하 공사함미다...<br>
-            1~235 경험치 필요량 있으신 분은 샤갤로 제보 부탁드림미다...이왕 하는거 다른거도 만들려고요...<br>
-             <a href = "https://gall.dcinside.com/mgallery/board/lists/?id=shynick" target = "blank" >https://gall.dcinside.com/mgallery/board/lists/?id=shynick<a><br>
+            작동이 제대로 되지 않는다면 인터넷 사용기록에서 쿠키를 지워주세요.<br>
+            일일퀘스트는 집계하지 않으며, 천공성의 경우 1바퀴 = 퀘스트 2개 클리어로 간주합니다<br>
+            부캐런 뒤졌다는 소문 듣고 메다닥 하면서 경던으로 바꿨습니다 와!<br>
+            106~110 구간은 정보가 없어 기입하지 않습니다 혹여나 정보를 아시는 분은 여기로 알려주세요
+            <a href = "https://gall.dcinside.com/mgallery/board/lists/?id=shynick" target = "blank" >https://gall.dcinside.com/mgallery/board/lists/?id=shynick<a><br>
             <div>
                 <p>
                     각성 레벨 <input type="number" name="level" min="1" max="105" style="width: 70px;" value = 1>, 
                     <input type="number" name="levelPercent" step="0.01" min="0" max= "100" style="width: 70px;" value = 0>%, 횟수 
                     <input type="number" name="playtime" min="0" max="9999" style="width: 70px;" value = 1>,
-                    퀘보<input type="number" name="questUp" min="0" style="width: 70px;" value = 700>                
+                    경획<input type="number" name="expUp" min="0" style="width: 70px;" value = 3000>,
+                    퀘보<input type="number" name="questUp" min="0" style="width: 70px;" value = 350>                
                     <button onclick='awakeningUp(0)'>확인(각성)</button>
                     <button onclick='awakeningAll()'>전체각성은?</button>
                 </p>
                 <p>
-                    초월 레벨 <input type="number" name="transcendenceLevel" min="1" max="9999" style="width: 70px;" value = 1>, 
-                    <input type="number" name="transcendenceLevelPercent" step="0.01" min="0" max= "100" style="width: 70px;" value = 0>%
-                    <button onclick='transcendenceUp(0)'>확인(초월)</button>
-                    <button onclick='transcendenceAll()'>전체초월은?</button>
+                    초월 레벨 <input type="number" name="ULevel" min="1" max="9999" style="width: 70px;" value = 1>, 
+                    <input type="number" name="ULevelPercent" step="0.01" min="0" max= "100" style="width: 70px;" value = 0>%
+                    <button onclick='ULevelUp(0)'>확인(초월)</button>
+                    <button onclick='ULevelAll()'>전체초월은?</button>
                 </p>
             </div>
         </head>
@@ -39,11 +39,8 @@
                     <table border="1" style="width:95%">
                         <tr>
                             <td></td>
-                            <td><center><button style="width:81px;" onclick='wantSelect("Normal", 9999)'>모두 선택</button><br><button onclick='reset("Normal")' style="width:81px;">리셋</button><br></center></td>
-                            <td><center><button style="width:81px;" onclick='wantSelect("Middle", 9999)'>모두 선택</button><br><button onclick='reset("Middle")' style="width:81px;">리셋</button></center></td>
-                            <td><center><button style="width:81px;" onclick='wantSelect("Boss", 9999)'>모두 선택</button><br><button onclick='reset("Boss")' style="width:81px;">리셋</button></center></td>
-                            <td><center><button style="width:81px;" onclick='wantSelect("Dayq", 9999)'>모두 선택</button><br><button onclick='reset("Dayq")' style="width:81px;">리셋</button></center></td>
-                            <td><center><button style="width:81px;" onclick='wantSelect("Infinityq", 9999)'>모두 선택</button><br><button onclick='reset("Infinityq")' style="width:81px;">리셋</button></center></td>
+                            <td><center><button style="width:81px;" onclick='wantSelect("Monster", 9999)'>모두 선택</button><br><button onclick='reset("Monster")' style="width:81px;">리셋</button><br></center></td>
+                            <td><center><button style="width:81px;" onclick='wantSelect("Quest", 9999)'>모두 선택</button><br><button onclick='reset("Quest")' style="width:81px;">리셋</button></center></td>
                         </tr>
                         <script>
                             makeTable();                 
@@ -54,21 +51,12 @@
                 </span>
                 <span>
                     <p>
-                        <button onclick='SelectMadenDungeon(Dungeon.length)'>연~부 선택하기</button><br>
-                        <button onclick='SelectMadenDungeon(10)'>일퀘런 선택하기</button><br>
-                        초월 <input type="number" name="questLevel" min="0" max="9999" style="width: 70px;" value = 1><br>
-                        이하의 던전 체크<br>
-                        <button onclick='wantSelect("Normal", 0)' style="width:81px;">잡몹</button><br>
-                        <button onclick='wantSelect("Middle", 0)' style="width:81px;">중보</button><br>
-                        <button onclick='wantSelect("Boss", 0)' style="width:81px;">보스</button><br>
-                        <button onclick='wantSelect("Dayq", 0)' style="width:81px;">일퀘</button><br>
-                        <button onclick='wantSelect("Infinityq", 0)' style="width:81px;">반복퀘</button><br>
-                        <button onclick='wantSelect("InfinityqDayq", 0)' style="width:81px;">반복퀘<br>(일퀘용)</button><br>
+                        <button onclick='SelectMadenDungeon(0)'>하드만 선택하기</button><button onclick='SelectMadenDungeon(1)'>하드만 선택하기(프 X)</button><br>
                         어디까지 가고싶나요?<br>
-                        초월<input type="number" name="wantTranscendenceLevel" min="0" max="9999" style="width: 70px;" value = 1><br>
-                        <button onclick='howManyPlayTranscendence(0)'>부캐런</button><button onclick='howManyPlayTranscendence(1)'>일퀘런</button><br>
+                        초월<input type="number" name="wantULevel" min="0" max="9999" style="width: 70px;" value = 1><br>
+                        <button onclick='howManyPlayULevel()'>부캐런</button><br>
                         각성<input type="number" name="wantAwakeningLevel" min="0" max="105" style="width: 70px;" value = 1><br>
-                        <button onclick='howManyPlayAwakening(0)'>부캐런</button><button onclick='howManyPlayAwakening(1)'>일퀘런</button><br>
+                        <button onclick='howManyPlayAwakening()'>부캐런</button><br>
                     </p>
 
                     
