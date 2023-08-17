@@ -25,7 +25,7 @@ function makeTable(){
                 '<input type="checkbox" id = ' + Dungeon[i][7] + '" name="'+ Dungeon[i][0] +'Monster" value="'+ Dungeon[i][2] +'" checked> 몬스터',
             "</th>",
             "<th>",
-                '<input type="checkbox" id = ' + Dungeon[i][7] + '" name="'+ Dungeon[i][0] +'Quest" value="'+ Dungeon[i][3] +'" checked> 퀘스',
+                '<input type="checkbox" id = ' + Dungeon[i][7] + '" name="'+ Dungeon[i][0] +'Quest" value="'+ Dungeon[i][3] +'" checked> 퀘스트',
             "</th>",
             "<th>",
             '횟수 <input type="number" name="run" min="0" max="9999" style="width: 70px;" value ="' + Dungeon[i][4] + '" >',
