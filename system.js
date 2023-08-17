@@ -1,26 +1,20 @@
 function makeTable(){
     //표 만드는 스크립트
     for(let i in Dungeon){
-        if(i < 10){
+        if(Dungeon[i][4] == 1){
             document.write(
             "<tr>",
-            "<th>" + Dungeon[i][1] + "</th>",
-            "<th>",
-                '<input type="checkbox" name="'+ Dungeon[i][0] +'Normal" value="'+ Dungeon[i][2] +'" checked> 잡몹',
-            "</th>",
-            "<th>",
-                '<input type="checkbox" name="'+ Dungeon[i][0] +'Middle" value="'+ Dungeon[i][3] +'" checked> 중보',
-            "</th>",
-            "<th>",
-                '<input type="checkbox" name="'+ Dungeon[i][0] +'Boss" value="'+ Dungeon[i][4] +'" checked> 보스',
-            "</th>",
-            "<th>",
-                '<input type="checkbox" name="'+ Dungeon[i][0] +'Dayq" value="'+ Dungeon[i][5] +'" checked> 일퀘',
-            "</th>",
-            "<th>",
-            '<input type="checkbox" name="'+ Dungeon[i][0] +'Infinityq" value="'+ Dungeon[i][5] +'"> 반복퀘',
-            "</th>",
-        "</tr>"
+                "<th>" + Dungeon[i][1] + "</th>",
+                "<th>",
+                    '<input type="checkbox" name="'+ Dungeon[i][0] +'Monster" value="'+ Dungeon[i][2] +'" checked> 잡몹',
+                "</th>",
+                "<th>",
+                    '<input type="checkbox" name="'+ Dungeon[i][0] +'Quest" value="'+ Dungeon[i][3] +'" checked> 중보',
+                "</th>",
+                "<th>",
+                '횟수 <input type="number" name="run" min="0" max="9999" style="width: 70px;" value ="' + Dungeon[i][4] + '" >',
+                "</th>",
+            "</tr>"
         );
         }
         else{
@@ -28,22 +22,16 @@ function makeTable(){
         "<tr>",
             "<th>" + Dungeon[i][1] + "</th>",
             "<th>",
-                '<input type="checkbox" id = ' + Dungeon[i][7] + '" name="'+ Dungeon[i][0] +'Normal" value="'+ Dungeon[i][2] +'" checked> 잡몹',
+                '<input type="checkbox" id = ' + Dungeon[i][7] + '" name="'+ Dungeon[i][0] +'Monster" value="'+ Dungeon[i][2] +'" checked> 잡몹',
             "</th>",
             "<th>",
-                '<input type="checkbox" id = ' + Dungeon[i][7] + '" name="'+ Dungeon[i][0] +'Middle" value="'+ Dungeon[i][3] +'" checked> 중보',
+                '<input type="checkbox" id = ' + Dungeon[i][7] + '" name="'+ Dungeon[i][0] +'Quest" value="'+ Dungeon[i][3] +'" checked> 중보',
             "</th>",
             "<th>",
-                '<input type="checkbox" id = ' + Dungeon[i][7] + '" name="'+ Dungeon[i][0] +'Boss" value="'+ Dungeon[i][4] +'" checked> 보스',
-            "</th>",
-            "<th>",
-                '<input type="checkbox" id = ' + Dungeon[i][7] + '" name="'+ Dungeon[i][0] +'Dayq" value="'+ Dungeon[i][5] +'"> 일퀘',
-            "</th>",
-            "<th>",
-            '<input type="checkbox" id = ' + Dungeon[i][7] + '" name="'+ Dungeon[i][0] +'Infinityq" value="'+ Dungeon[i][5] +'"> 반복퀘',
+            '횟수 <input type="number" name="run" min="0" max="9999" style="width: 70px;" value ="' + Dungeon[i][4] + '" >',
             "</th>",
         "</tr>"
-            );
+        );
         }                    
     }
 }
@@ -52,30 +40,21 @@ function makeTable(){
 function awakeningUp(num){
     var level = document.getElementsByName("level");                //내 각성 레벨
     var levelPercent = document.getElementsByName("levelPercent");  //내 가성 레벨 %
-    var playtime = document.getElementsByName("playtime");          //도는 횟수
+    var playtime = document.getElementsByName("playtime");          //전체 횟수(캐릭터)
+    var run = document.getElementsByName("run");     //던전 도는 횟수(1캐릭당)
+    var expUp = document.getElementsByName("expUp");
     var questUp = document.getElementsByName("questUp");            //퀘보업
 
-    var expNormal=0;    //잡몹 경험치 저장소
-    var expMiddle=0;    //중보 경험치 저장소
-    var expBoss=0;      //보스 경험치 저장소      
-    var expDayq=0;      //일퀘 경험치 저장소
-    var expInfinityq=0; //반복퀘 경험치 저장소
+    var expMonster=0;    //몬스터 경험치 저장소
+    var expQuest=0;    //퀘스트 경험치 저장소
     var levelUp = 0;    //레벨업 저장소
 
-
     //잡몹
-    expNormal = ExpAdd("Normal", 2);
+    expMonster = ExpAdd("Monster", 2);
     //중보
-    expMiddle = ExpAdd("Middle", 3);
-    //보스
-    expBoss = ExpAdd("Boss", 4);
-    //일퀘
-    expDayq = ExpAdd("Dayq", 5);
-    //반복퀘
-    expInfinityq = ExpAdd("Infinityq", 6);
+    expQuest = ExpAdd("Quest", 3);
 
-    var exp_all = (expNormal + expMiddle + expBoss + expDayq + expInfinityq) * (1 + questUp[0].value / 100) * playtime[0].value;   //퀘스트 종료 후 얻는 경험치
-
+    var exp_all = (((expMonster * run[0].value) * (1 + expUp[0].value / 100)) + ((expQuest * run[0].value) * (1 + questUp[0].value/100))) * playtime[0].value;   //퀘스트 종료 후 얻는 경험치
     var nextExp = Level[level[0].value - 1][1] - (Level[level[0].value - 1][1] * (levelPercent[0].value / 100));   //현재 다음렙가기위해 필요한 경험치
 
     if(nextExp > exp_all){  //이걸로 레벨이 1도 올라가지 않을 경우
@@ -124,34 +103,26 @@ function awakeningUp(num){
 }
 
 //초월레벨 계산하는 함수
-function transcendenceUp(num){ 
-    var transcendenceLevel = document.getElementsByName("transcendenceLevel");                //내 초월 레벨
-    var transcendenceLevelPercent = document.getElementsByName("transcendenceLevelPercent");  //내 초월 레벨 %
-    var playtime = document.getElementsByName("playtime");          //도는 횟수
+function ULevelUp(num){ 
+    var ULevel = document.getElementsByName("ULevel");                //내 초월 레벨
+    var ULevelPercent = document.getElementsByName("ULevelPercent");  //내 초월 레벨 %
+    var playtime = document.getElementsByName("playtime");          //전체 횟수(캐릭터)
+    var run = document.getElementsByName("run");     //던전 도는 횟수(1캐릭당)
+    var expUp = document.getElementsByName("expUp");
     var questUp = document.getElementsByName("questUp");            //퀘보업
 
-    var expNormal=0;    //잡몹 경험치 저장소
-    var expMiddle=0;    //중보 경험치 저장소
-    var expBoss=0;      //보스 경험치 저장소      
-    var expDayq=0;      //일퀘 경험치 저장소
-    var expInfinityq=0; //반복퀘 경험치 저장소
+    var expMonster=0;    //몬스터 경험치 저장소
+    var expQuest=0;    //퀘스트 경험치 저장소
     var levelUp = 0;    //레벨업 저장소
 
-
     //잡몹
-    expNormal = ExpAdd("Normal", 2);
+    expMonster = ExpAdd("Monster", 2);
     //중보
-    expMiddle = ExpAdd("Middle", 3);
-    //보스
-    expBoss = ExpAdd("Boss", 4);
-    //일퀘
-    expDayq = ExpAdd("Dayq", 5);
-    //반복퀘
-    expInfinityq = ExpAdd("Infinityq", 6);
+    expQuest = ExpAdd("Quest", 3);
 
-    var exp_all = (expNormal + expMiddle + expBoss + expDayq + expInfinityq) * (1 + questUp[0].value / 100) * playtime[0].value;   //퀘스트 종료 후 얻는 경험치
+    var exp_all = (((expMonster * run[0].value) * (1 + expUp[0].value / 100)) + ((expQuest * run[0].value) * (1 + questUp[0].value/100))) * playtime[0].value;   //퀘스트 종료 후 얻는 경험치
 
-    var nextExp = (40000000000 + 100000000 * (transcendenceLevel[0].value - 1 + 1) - (40000000000 + 100000000 * (transcendenceLevel[0].value - 1 + 1)) * transcendenceLevelPercent[0].value / 100)   //현재 다음렙가기위해 필요한 경험치
+    var nextExp = (40000000000 + 100000000 * (ULevel[0].value - 1 + 1) - (40000000000 + 100000000 * (ULevel[0].value - 1 + 1)) * ULevelPercent[0].value / 100)   //현재 다음렙가기위해 필요한 경험치
     //이유는 모르겠는데 저거 -1 +1 안하면 값이 제대로 표기가 안됨
     if(nextExp > exp_all){  //이걸로 레벨이 1도 올라가지 않을 경우
         nextExp -= exp_all;
@@ -167,7 +138,7 @@ function transcendenceUp(num){
         exp_all = exp_all - nextExp;
         levelUp++;
         
-        for(i = transcendenceLevel[0].value - 1 + 2; i < 9999; i++){ //한번 레벨 올라갔으므로 +1 된 상태임 이유는 모르겠는데 저렇게 안하면 제대로 표기가 안됨
+        for(i = ULevel[0].value - 1 + 2; i < 9999; i++){ //한번 레벨 올라갔으므로 +1 된 상태임 이유는 모르겠는데 저렇게 안하면 제대로 표기가 안됨
             if(exp_all < (40000000000 + 100000000 * i)){
                 nextExp = (40000000000 + 100000000 * i) - exp_all;
                 break;
@@ -179,52 +150,41 @@ function transcendenceUp(num){
         }
     }
     
-    var resultLevel = transcendenceLevel[0].value - (levelUp * -1);
+    var resultLevel = ULevel[0].value - (levelUp * -1);
     if(resultLevel == 9999){    //여기서부턴 의미 없어보이므로 남은 경험치는 표기 X
         resultLevelPercent = 0;
     }
     else{
-        var resultLevelPercent = (40000000000 + 100000000 * (resultLevel - 1) - nextExp) / (40000000000 + 100000000 * (resultLevel - 1)) * 100;
+        var resultLevelPercent = (40000000000 + 100000000 * (resultLevel - 1 + 1) - nextExp) / (40000000000 + 100000000 * (resultLevel - 1)) * 100;
     }
     if(num == 0){
         alert("Lv." + resultLevel + ", " + resultLevelPercent + "%");
     }
     else if(num == 1){
-        transcendenceLevel[0].value = resultLevel;
-        transcendenceLevelPercent[0].value = resultLevelPercent;
-
-        var questLevel = document.getElementsByName("questLevel");                //선택된 초월 레벨
-        questLevel[0].value = resultLevel;
+        ULevel[0].value = resultLevel;
+        ULevelPercent[0].value = resultLevelPercent;
     }
 
 }
 
 //전체 각성레벨 계산하는 함수
 function awakeningAll(){
-    var level = document.getElementsByName("level");                //내 레벨
-    var levelPercent = document.getElementsByName("levelPercent");  //내 레벨 %
-    var playtime = document.getElementsByName("playtime");          //도는 횟수
+    var level = document.getElementsByName("level");                //내 각성 레벨
+    var levelPercent = document.getElementsByName("levelPercent");  //내 가성 레벨 %
+    var playtime = document.getElementsByName("playtime");          //전체 횟수(캐릭터)
+    var run = document.getElementsByName("run");     //던전 도는 횟수(1캐릭당)
+    var expUp = document.getElementsByName("expUp");
     var questUp = document.getElementsByName("questUp");            //퀘보업
 
-    var expNormal=0;    //잡몹 경험치 저장소
-    var expMiddle=0;    //중보 경험치 저장소
-    var expBoss=0;      //보스 경험치 저장소      
-    var expDayq=0;      //일퀘 경험치 저장소
-    var expInfinityq=0; //반복퀘 경험치 저장소
-
+    var expMonster=0;    //몬스터 경험치 저장소
+    var expQuest=0;    //퀘스트 경험치 저장소
 
     //잡몹
-    expNormal = ExpAdd("Normal", 2);
+    expMonster = ExpAdd("Monster", 2);
     //중보
-    expMiddle = ExpAdd("Middle", 3);
-    //보스
-    expBoss = ExpAdd("Boss", 4);
-    //일퀘
-    expDayq = ExpAdd("Dayq", 5);
-    //반복퀘
-    expInfinityq = ExpAdd("Infinityq", 6);
+    expQuest = ExpAdd("Quest", 3);
 
-    var exp_all = (expNormal + expMiddle + expBoss + expDayq + expInfinityq) * (1 + questUp[0].value / 100) * playtime[0].value;   //퀘스트 종료 후 얻는 경험치
+    var exp_all = (((expMonster * run[0].value) * (1 + expUp[0].value / 100)) + ((expQuest * run[0].value) * (1 + questUp[0].value/100))) * playtime[0].value;   //퀘스트 종료 후 얻는 경험치
     var nowExp = 0; //현재 경험치
     var allExp = 0; //1~100까지의 경험치량
     var result = 0; //도달한 각성렙의 결과
@@ -251,31 +211,23 @@ function awakeningAll(){
 }
 
 //전체 초월레벨 계산하는 함수
-function transcendenceAll(){
-    var transcendenceLevel = document.getElementsByName("transcendenceLevel");                //내 초월 레벨
-    var transcendenceLevelPercent = document.getElementsByName("transcendenceLevelPercent");  //내 초월 레벨 %
-    var playtime = document.getElementsByName("playtime");          //도는 횟수
+function ULevelAll(){
+    var ULevel = document.getElementsByName("ULevel");                //내 초월 레벨
+    var ULevelPercent = document.getElementsByName("ULevelPercent");  //내 초월 레벨 %
+    var playtime = document.getElementsByName("playtime");          //전체 횟수(캐릭터)
+    var run = document.getElementsByName("run");     //던전 도는 횟수(1캐릭당)
+    var expUp = document.getElementsByName("expUp");
     var questUp = document.getElementsByName("questUp");            //퀘보업
 
-    var expNormal=0;    //잡몹 경험치 저장소
-    var expMiddle=0;    //중보 경험치 저장소
-    var expBoss=0;      //보스 경험치 저장소      
-    var expDayq=0;      //일퀘 경험치 저장소
-    var expInfinityq=0; //반복퀘 경험치 저장소
-
+    var expMonster=0;    //몬스터 경험치 저장소
+    var expQuest=0;    //퀘스트 경험치 저장소
 
     //잡몹
-    expNormal = ExpAdd("Normal", 2);
+    expMonster = ExpAdd("Monster", 2);
     //중보
-    expMiddle = ExpAdd("Middle", 3);
-    //보스
-    expBoss = ExpAdd("Boss", 4);
-    //일퀘
-    expDayq = ExpAdd("Dayq", 5);
-    //반복퀘
-    expInfinityq = ExpAdd("Infinityq", 6);
+    expQuest = ExpAdd("Quest", 3);
 
-    var exp_all = (expNormal + expMiddle + expBoss + expDayq + expInfinityq) * (1 + questUp[0].value / 100) * playtime[0].value;   //퀘스트 종료 후 얻는 경험치
+    var exp_all = (((expMonster * run[0].value) * (1 + expUp[0].value / 100)) + ((expQuest * run[0].value) * (1 + questUp[0].value/100))) * playtime[0].value;   //퀘스트 종료 후 얻는 경험치
     var nowExp = 0; //현재 경험치
     var allExp = 0; //1~9999까지의 경험치량
     var result = 0; //도달한 초월렙의 결과
@@ -286,11 +238,11 @@ function transcendenceAll(){
     }
 
     //지금까지 얻은 경험치량
-    for(i = 1; i < transcendenceLevel[0].value; i++){   //내 레벨이 1일때를 생각해보자 -1 없으면 이 계산기 결과로는 1레벨에서 얻은 경험치는 400억이 되버림
+    for(i = 1; i < ULevel[0].value; i++){   //내 레벨이 1일때를 생각해보자 -1 없으면 이 계산기 결과로는 1레벨에서 얻은 경험치는 400억이 되버림
         nowExp += 40000000000 + i * 100000000;
     }
 
-    nowExp += transcendenceLevelPercent[0].value / 100 * (40000000000 + 100000000 * transcendenceLevel[0].value);   //초월렙 %까지 추가한 곳 레벨1의 50%를 생각할것
+    nowExp += ULevelPercent[0].value / 100 * (40000000000 + 100000000 * ULevel[0].value);   //초월렙 %까지 추가한 곳 레벨1의 50%를 생각할것
     nowExp += exp_all;  //퀘스트 종료 후에 얻은 곳 까지 포함한것
     result = nowExp/allExp*100;
     if(result >= 100){
@@ -363,128 +315,83 @@ function ExpAdd(name, num){
 
 //특정 던전 선택하는 곳
 function SelectMadenDungeon(num){
-    reset("Normal");
-    reset("Middle");
-    reset("Boss");
-    reset("Dayq");
-    reset("Infinityq")
+    reset("Monster");
+    reset("Quest");
 
-    if(num == 10){   //일퀘런이므로 반복퀘만 선택
-        for(i=0; i < num; i++){
-        document.getElementsByName(Dungeon[i][0]+"Infinityq")[0].checked = true;
-        }
-    }
-    else if(num == Dungeon.length){ //부캐런이므로 잡,줍퀘 선택
-        for(i=0; i < num; i++){
-            document.getElementsByName(Dungeon[i][0]+"Normal")[0].checked = true;
-            document.getElementsByName(Dungeon[i][0]+"Middle")[0].checked = true;
-            document.getElementsByName(Dungeon[i][0]+"Boss")[0].checked = true;
+    if(num == 0)
+    {
+        for (let i in Dungeon)
+        {
+            if(Dungeon[i][5] == 1)
+            {
+                document.getElementsByName(Dungeon[i][0]+"Monster")[0].checked = true;
+                document.getElementsByName(Dungeon[i][0]+"Quest")[0].checked = true;
+            }
         }
     }
 
-    for(i = 0; i < 10; i++){    //일퀘는 10개 공통
-        document.getElementsByName(Dungeon[i][0]+"Dayq")[0].checked = true;
+    if(num == 1)    //프정 거르기
+    {
+        for (let i in Dungeon)
+    {
+        if(Dungeon[i][5] == 1)
+        {
+            if(Dungeon[i][0] == 'priringgarden')
+            {
+                continue;
+            }
+            document.getElementsByName(Dungeon[i][0]+"Monster")[0].checked = true;
+            document.getElementsByName(Dungeon[i][0]+"Quest")[0].checked = true;
+        }
     }
-}
-
-//목표지점까지 자동으로 기입하는 함수 - 각성
-function howManyPlayAwakening(){    
-    repeat = 0; //반복 횟수
-
-    var level = document.getElementsByName("level");                        //내 레벨
-    var wantlevel = document.getElementsByName("wantAwakeningLevel");       //원하는 각성 레벨
-
-    while(wantlevel[0].value > level[0].value){
-        wantSelect("Normal", 0);
-        wantSelect("Middle", 0);
-        wantSelect("Boss", 0);
-        wantSelect("Dayq", 0);
-        awakeningUp(1)
-        repeat++;
     }
-
 }
 
 //원하는 곳까지 자동으로 계산해주는 함수(초월)
-function howManyPlayTranscendence(num){  
-    //일단 한번은 초기화 해줘야 일퀘 / 부캐런 안꼬임
-    reset("Normal");
-    reset("Middle");
-    reset("Boss");
-    reset("Dayq");
-    reset("Infinityq");
-
+function howManyPlayULevel(){  
     repeat = 0; //반복 횟수
 
-    var transcendenceLevel = document.getElementsByName("transcendenceLevel");                          //내 레벨
-    var transcendenceLevelPercent = document.getElementsByName("transcendenceLevelPercent");            //내 초월 레벨 %
-    var wanttranscendenceLevel = document.getElementsByName("wantTranscendenceLevel");                  //원하는 초월 레벨
-    var questLevel = document.getElementsByName("questLevel");      //원하는 던전 선택
+    var ULevel = document.getElementsByName("ULevel");                          //내 레벨
+    var ULevelPercent = document.getElementsByName("ULevelPercent");            //내 초월 레벨 %
+    var wantULevel = document.getElementsByName("wantULevel");                  //원하는 초월 레벨
     var playtime = document.getElementsByName("playtime");          //도는 횟수
 
-    var saveTranscendenceLevel = transcendenceLevel[0].value;   //초월렙 세이브용
-    var saveTranscendenceLevelPercent = transcendenceLevelPercent[0].value;   //초월렙% 세이브용
+    var saveULevel = ULevel[0].value;   //초월렙 세이브용
+    var saveULevelPercent = ULevelPercent[0].value;   //초월렙% 세이브용
 
-    if(wanttranscendenceLevel[0].value > 9999){
-        wanttranscendenceLevel[0].value = 9999;
+    if(wantULevel[0].value > 9999){
+        wantULevel[0].value = 9999;
         alert("그러다 사이트 팅겨요...")
     }
 
     playtime[0].value = 1;  //무조건 1 고정해야 횟수가 나올 수 있음
 
-    questLevel[0].value = transcendenceLevel[0].value;  //원하는 던전의 레벨은 초월렙을 따르므로
-
-    while(wanttranscendenceLevel[0].value + 1 - 1 > transcendenceLevel[0].value + 1 - 1){   //이유는 모르겠는데 +1 -1로 안하면 숫자로 감지를 안하는듯...
-
-        if(num == 0){   //0을 넣으면 부캐런 기준으로
-            wantSelect("Normal", 0);
-            wantSelect("Middle", 0);
-            wantSelect("Boss", 0);
-            wantSelect("Dayq", 0);
-            transcendenceUp(1);
-            repeat++;
-        }
-        else if(num == 1){  //1을 넣으면 일퀘런 기준으로
-            wantSelect("InfinityqDayq", 0);
-            wantSelect("Dayq", 0);
-            transcendenceUp(1);
-            repeat++;
-        }
-
+    while(wantULevel[0].value + 1 - 1 > ULevel[0].value + 1 - 1){   //이유는 모르겠는데 +1 -1로 안하면 숫자로 감지를 안하는듯...
+        ULevelUp(1);
+        repeat++;
     }
 
     //처음에 쓴 값 되돌리는 곳
-    transcendenceLevel[0].value = saveTranscendenceLevel;
-    transcendenceLevelPercent[0].value = saveTranscendenceLevelPercent;
+    ULevel[0].value = saveULevel;
+    ULevelPercent[0].value = saveULevelPercent;
 
-    if(num == 0)    //부캐런이라서 2회당 1캐릭임
-        alert("초월 " + wanttranscendenceLevel[0].value + "까지 부캐런 " +repeat + "회 (" + repeat/2 + "캐릭)");
-    else if(num == 1)   //일퀘런이라서 캐릭 수는 필요 없음
-        alert("초월 " + wanttranscendenceLevel[0].value + "까지 일퀘런 " +repeat + "회");
+    alert("초월 " + wantULevel[0].value + "까지 경던 " +repeat + "회");
 }
 
 //원하는 곳까지 자동으로 계산해주는 함수(각성)
 function howManyPlayAwakening(num){  
-    //일단 한번은 초기화 해줘야 일퀘 / 부캐런 안꼬임
-    reset("Normal");
-    reset("Middle");
-    reset("Boss");
-    reset("Dayq");
-    reset("Infinityq");
-
     repeat = 0; //반복 횟수
 
     //각성 1인데 초월 4000인 사람 있고 1500인 사람 있고 이래서 어찌됐건 얘도 있어야됨 
-    var transcendenceLevel = document.getElementsByName("transcendenceLevel");                      //내 초월 레벨
-    var transcendenceLevelPercent = document.getElementsByName("transcendenceLevelPercent");        //내 초월 레벨 %
+    var ULevel = document.getElementsByName("ULevel");                      //내 초월 레벨
+    var ULevelPercent = document.getElementsByName("ULevelPercent");        //내 초월 레벨 %
     var awakeningLevel = document.getElementsByName("level");                                       //내 각성 레벨
     var awakeningLevelPercent = document.getElementsByName("levelPercent");                         //내 각성 레벨 %
     var wantAwakeningLevel = document.getElementsByName("wantAwakeningLevel");                  //원하는 각성 레벨
-    var questLevel = document.getElementsByName("questLevel");      //원하는 던전 선택
     var playtime = document.getElementsByName("playtime");          //도는 횟수
 
-    var saveTranscendenceLevel = transcendenceLevel[0].value;   //초월렙 세이브용
-    var saveTranscendenceLevelPercent = transcendenceLevelPercent[0].value;   //초월렙 세이브용
+    var saveULevel = ULevel[0].value;   //초월렙 세이브용
+    var saveULevelPercent = ULevelPercent[0].value;   //초월렙 세이브용
     var saveAwakeningLevel = awakeningLevel[0].value;                   //각성렙 세이브용
     var saveAwakeningLevelPercent = awakeningLevelPercent[0].value;     //각성렙 세이브용
 
@@ -495,38 +402,19 @@ function howManyPlayAwakening(num){
 
     playtime[0].value = 1;  //무조건 1 고정해야 횟수가 나올 수 있음
 
-    questLevel[0].value = transcendenceLevel[0].value;      //원하는 던전의 레벨은 초월렙을 따르므로
-
     while(wantAwakeningLevel[0].value + 1 - 1 > awakeningLevel[0].value + 1 - 1){   //이유는 모르겠는데 +1 -1로 안하면 숫자로 감지를 안하는듯...
-        if(num == 0){   //0을 넣으면 부캐런 기준으로
-            wantSelect("Normal", 0);
-            wantSelect("Middle", 0);
-            wantSelect("Boss", 0);
-            wantSelect("Dayq", 0);
-            transcendenceUp(1);
+            ULevelUp(1);
             awakeningUp(1);
             repeat++;
-        }
-        else if(num == 1){  //1을 넣으면 일퀘런 기준으로
-            wantSelect("InfinityqDayq", 0);
-            wantSelect("Dayq", 0);
-            transcendenceUp(1);
-            awakeningUp(1);
-            repeat++;
-        }
-
     }
 
 
     //처음에 쓴 값 되돌리는 곳
-    transcendenceLevel[0].value = saveTranscendenceLevel;
-    transcendenceLevelPercent[0].value = saveTranscendenceLevelPercent;
+    ULevel[0].value = saveULevel;
+    ULevelPercent[0].value = saveULevelPercent;
     awakeningLevel[0].value = saveAwakeningLevel;
     awakeningLevelPercent[0].value = saveAwakeningLevelPercent;
 
-    if(num == 0)    //부캐런이라서 2회당 1캐릭임
-        alert("각성 " + wantAwakeningLevel[0].value + "까지 부캐런 " + repeat + "회 (" + repeat/2 + "캐릭)");
-    else if(num == 1)   //일퀘런이라서 캐릭 수는 필요 없음
-        alert("각성 " + wantAwakeningLevel[0].value + "까지 일퀘런 " + repeat + "회");
+    alert("각성 " + wantAwakeningLevel[0].value + "까지 일퀘런 " + repeat + "회");
     
 }
