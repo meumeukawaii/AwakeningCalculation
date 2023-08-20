@@ -12,7 +12,7 @@ function makeTable(){
                     '<input type="checkbox" name="'+ Dungeon[i][0] +'Quest" value="'+ Dungeon[i][3] +'" checked> 퀘스트',
                 "</th>",
                 "<th>",
-                '횟수 <input type="number" name="run" min="0" max="9999" style="width: 70px;" value ="' + Dungeon[i][4] + '" >',
+                '횟수 <input type="number" name="'+ Dungeon[i][0] +'run" min="0" max="9999" style="width: 70px;" value ="' + Dungeon[i][4] + '" >',
                 "</th>",
             "</tr>"
         );
@@ -28,7 +28,7 @@ function makeTable(){
                 '<input type="checkbox" id = ' + Dungeon[i][7] + '" name="'+ Dungeon[i][0] +'Quest" value="'+ Dungeon[i][3] +'" checked> 퀘스트',
             "</th>",
             "<th>",
-            '횟수 <input type="number" name="run" min="0" max="9999" style="width: 70px;" value ="' + Dungeon[i][4] + '" >',
+            '횟수 <input type="number" name="'+ Dungeon[i][0] +'run" min="0" max="9999" style="width: 70px;" value ="' + Dungeon[i][4] + '" >',
             "</th>",
         "</tr>"
         );
@@ -41,7 +41,6 @@ function awakeningUp(num){
     var level = document.getElementsByName("level");                //내 각성 레벨
     var levelPercent = document.getElementsByName("levelPercent");  //내 가성 레벨 %
     var playtime = document.getElementsByName("playtime");          //전체 횟수(캐릭터)
-    var run = document.getElementsByName("run");     //던전 도는 횟수(1캐릭당)
     var expUp = document.getElementsByName("expUp");
     var questUp = document.getElementsByName("questUp");            //퀘보업
 
@@ -50,11 +49,11 @@ function awakeningUp(num){
     var levelUp = 0;    //레벨업 저장소
 
     //잡몹
-    expMonster = ExpAdd("Monster", 2);
+    expMonster = ExpAdd("Monster", 2, "run");
     //중보
-    expQuest = ExpAdd("Quest", 3);
+    expQuest = ExpAdd("Quest", 3, "run");
 
-    var exp_all = (((expMonster * run[0].value) * (1 + expUp[0].value / 100)) + ((expQuest * run[0].value) * (1 + questUp[0].value/100))) * playtime[0].value;   //퀘스트 종료 후 얻는 경험치
+    var exp_all = (((expMonster) * (1 + expUp[0].value / 100)) + ((expQuest) * (1 + questUp[0].value/100))) * playtime[0].value;   //퀘스트 종료 후 얻는 경험치
     var nextExp = Level[level[0].value - 1][1] - (Level[level[0].value - 1][1] * (levelPercent[0].value / 100));   //현재 다음렙가기위해 필요한 경험치
 
     if(nextExp > exp_all){  //이걸로 레벨이 1도 올라가지 않을 경우
@@ -107,7 +106,6 @@ function ULevelUp(num){
     var ULevel = document.getElementsByName("ULevel");                //내 초월 레벨
     var ULevelPercent = document.getElementsByName("ULevelPercent");  //내 초월 레벨 %
     var playtime = document.getElementsByName("playtime");          //전체 횟수(캐릭터)
-    var run = document.getElementsByName("run");     //던전 도는 횟수(1캐릭당)
     var expUp = document.getElementsByName("expUp");
     var questUp = document.getElementsByName("questUp");            //퀘보업
 
@@ -116,11 +114,11 @@ function ULevelUp(num){
     var levelUp = 0;    //레벨업 저장소
 
     //잡몹
-    expMonster = ExpAdd("Monster", 2);
+    expMonster = ExpAdd("Monster", 2, "run");
     //중보
-    expQuest = ExpAdd("Quest", 3);
+    expQuest = ExpAdd("Quest", 3, "run");
 
-    var exp_all = (((expMonster * run[0].value) * (1 + expUp[0].value / 100)) + ((expQuest * run[0].value) * (1 + questUp[0].value/100))) * playtime[0].value;   //퀘스트 종료 후 얻는 경험치
+    var exp_all = (((expMonster) * (1 + expUp[0].value / 100)) + ((expQuest) * (1 + questUp[0].value/100))) * playtime[0].value;   //퀘스트 종료 후 얻는 경험치
 
     var nextExp = (40000000000 + 100000000 * (ULevel[0].value - 1 + 1) - (40000000000 + 100000000 * (ULevel[0].value - 1 + 1)) * ULevelPercent[0].value / 100)   //현재 다음렙가기위해 필요한 경험치
     //이유는 모르겠는데 저거 -1 +1 안하면 값이 제대로 표기가 안됨
@@ -172,7 +170,6 @@ function awakeningAll(){
     var level = document.getElementsByName("level");                //내 각성 레벨
     var levelPercent = document.getElementsByName("levelPercent");  //내 가성 레벨 %
     var playtime = document.getElementsByName("playtime");          //전체 횟수(캐릭터)
-    var run = document.getElementsByName("run");     //던전 도는 횟수(1캐릭당)
     var expUp = document.getElementsByName("expUp");
     var questUp = document.getElementsByName("questUp");            //퀘보업
 
@@ -180,11 +177,11 @@ function awakeningAll(){
     var expQuest=0;    //퀘스트 경험치 저장소
 
     //잡몹
-    expMonster = ExpAdd("Monster", 2);
+    expMonster = ExpAdd("Monster", 2, "run");
     //중보
-    expQuest = ExpAdd("Quest", 3);
+    expQuest = ExpAdd("Quest", 3, "run");
 
-    var exp_all = (((expMonster * run[0].value) * (1 + expUp[0].value / 100)) + ((expQuest * run[0].value) * (1 + questUp[0].value/100))) * playtime[0].value;   //퀘스트 종료 후 얻는 경험치
+    var exp_all = (((expMonster) * (1 + expUp[0].value / 100)) + ((expQuest) * (1 + questUp[0].value/100))) * playtime[0].value;   //퀘스트 종료 후 얻는 경험치
     var nowExp = 0; //현재 경험치
     var allExp = 0; //1~100까지의 경험치량
     var result = 0; //도달한 각성렙의 결과
@@ -215,7 +212,6 @@ function ULevelAll(){
     var ULevel = document.getElementsByName("ULevel");                //내 초월 레벨
     var ULevelPercent = document.getElementsByName("ULevelPercent");  //내 초월 레벨 %
     var playtime = document.getElementsByName("playtime");          //전체 횟수(캐릭터)
-    var run = document.getElementsByName("run");     //던전 도는 횟수(1캐릭당)
     var expUp = document.getElementsByName("expUp");
     var questUp = document.getElementsByName("questUp");            //퀘보업
 
@@ -223,11 +219,11 @@ function ULevelAll(){
     var expQuest=0;    //퀘스트 경험치 저장소
 
     //잡몹
-    expMonster = ExpAdd("Monster", 2);
+    expMonster = ExpAdd("Monster", 2, "run");
     //중보
-    expQuest = ExpAdd("Quest", 3);
+    expQuest = ExpAdd("Quest", 3, "run");
 
-    var exp_all = (((expMonster * run[0].value) * (1 + expUp[0].value / 100)) + ((expQuest * run[0].value) * (1 + questUp[0].value/100))) * playtime[0].value;   //퀘스트 종료 후 얻는 경험치
+    var exp_all = (((expMonster) * (1 + expUp[0].value / 100)) + ((expQuest) * (1 + questUp[0].value/100))) * playtime[0].value;   //퀘스트 종료 후 얻는 경험치
     var nowExp = 0; //현재 경험치
     var allExp = 0; //1~9999까지의 경험치량
     var result = 0; //도달한 초월렙의 결과
@@ -302,11 +298,12 @@ function wantSelect(name, num){
 }
 
 //해당 던전 경험치를 더하는 함수
-function ExpAdd(name, num){
+function ExpAdd(name, num, run){
     exp = 0;
     for(let i in Dungeon){
         if (document.getElementsByName(Dungeon[i][0]+name)[0].checked == true) {
-            exp+=Dungeon[i][num]
+            var rundungeon = document.getElementsByName(Dungeon[i][0]+run)[0].value;
+            exp += (Dungeon[i][num] * rundungeon);
         }
     }
 
