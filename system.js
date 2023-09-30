@@ -14,6 +14,9 @@ function makeTable(){
                 "<th>",
                 '횟수 <input type="number" name="'+ Dungeon[i][0] +'run" min="0" max="9999" style="width: 70px;" value ="' + Dungeon[i][4] + '" >',
                 "</th>",
+                "<th>",
+                     Dungeon[i][2],
+                "</th>",
             "</tr>"
         );
         }
@@ -29,6 +32,9 @@ function makeTable(){
             "</th>",
             "<th>",
             '횟수 <input type="number" name="'+ Dungeon[i][0] +'run" min="0" max="9999" style="width: 70px;" value ="' + Dungeon[i][4] + '" >',
+            "</th>",
+            "<th>",
+                Dungeon[i][2],
             "</th>",
         "</tr>"
         );
