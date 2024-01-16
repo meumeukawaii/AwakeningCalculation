@@ -49,15 +49,16 @@ function awakeningUp(num){
     var playtime = document.getElementsByName("playtime");          //전체 횟수(캐릭터)
     var expUp = document.getElementsByName("expUp");
     var questUp = document.getElementsByName("questUp");            //퀘보업
+    var party2 = document.getElementsByName("party2");              //파티여부
 
     var expMonster=0;    //몬스터 경험치 저장소
     var expQuest=0;    //퀘스트 경험치 저장소
     var levelUp = 0;    //레벨업 저장소
 
-    //잡몹
-    expMonster = ExpAdd("Monster", 2, "run");
-    //중보
-    expQuest = ExpAdd("Quest", 3, "run");
+    //몬스터
+    expMonster = ExpAdd("Monster", 2, "run", party2[0].checked);
+    //퀘스트
+    expQuest = ExpAdd("Quest", 3, "run", party2[0].checked);
 
     var exp_all = (((expMonster) * (1 + expUp[0].value / 100)) + ((expQuest) * (1 + questUp[0].value/100))) * playtime[0].value;   //퀘스트 종료 후 얻는 경험치
     var nextExp = Level[level[0].value - 1][1] - (Level[level[0].value - 1][1] * (levelPercent[0].value / 100));   //현재 다음렙가기위해 필요한 경험치
@@ -114,15 +115,16 @@ function ULevelUp(num){
     var playtime = document.getElementsByName("playtime");          //전체 횟수(캐릭터)
     var expUp = document.getElementsByName("expUp");
     var questUp = document.getElementsByName("questUp");            //퀘보업
+    var party2 = document.getElementsByName("party2");
 
     var expMonster=0;    //몬스터 경험치 저장소
     var expQuest=0;    //퀘스트 경험치 저장소
     var levelUp = 0;    //레벨업 저장소
 
     //잡몹
-    expMonster = ExpAdd("Monster", 2, "run");
+    expMonster = ExpAdd("Monster", 2, "run", party2[0].checked);
     //중보
-    expQuest = ExpAdd("Quest", 3, "run");
+    expQuest = ExpAdd("Quest", 3, "run", party2[0].checked);
 
     var exp_all = (((expMonster) * (1 + expUp[0].value / 100)) + ((expQuest) * (1 + questUp[0].value/100))) * playtime[0].value;   //퀘스트 종료 후 얻는 경험치
 
@@ -178,14 +180,15 @@ function awakeningAll(){
     var playtime = document.getElementsByName("playtime");          //전체 횟수(캐릭터)
     var expUp = document.getElementsByName("expUp");
     var questUp = document.getElementsByName("questUp");            //퀘보업
+    var party2 = document.getElementsByName("party2");
 
     var expMonster=0;    //몬스터 경험치 저장소
     var expQuest=0;    //퀘스트 경험치 저장소
 
     //잡몹
-    expMonster = ExpAdd("Monster", 2, "run");
+    expMonster = ExpAdd("Monster", 2, "run", party2[0].checked);
     //중보
-    expQuest = ExpAdd("Quest", 3, "run");
+    expQuest = ExpAdd("Quest", 3, "run", party2[0].checked);
 
     var exp_all = (((expMonster) * (1 + expUp[0].value / 100)) + ((expQuest) * (1 + questUp[0].value/100))) * playtime[0].value;   //퀘스트 종료 후 얻는 경험치
     var nowExp = 0; //현재 경험치
@@ -220,14 +223,15 @@ function ULevelAll(){
     var playtime = document.getElementsByName("playtime");          //전체 횟수(캐릭터)
     var expUp = document.getElementsByName("expUp");
     var questUp = document.getElementsByName("questUp");            //퀘보업
+    var party2 = document.getElementsByName("party2");
 
     var expMonster=0;    //몬스터 경험치 저장소
     var expQuest=0;    //퀘스트 경험치 저장소
 
     //잡몹
-    expMonster = ExpAdd("Monster", 2, "run");
+    expMonster = ExpAdd("Monster", 2, "run", party2[0].checked);
     //중보
-    expQuest = ExpAdd("Quest", 3, "run");
+    expQuest = ExpAdd("Quest", 3, "run", party2[0].checked);
 
     var exp_all = (((expMonster) * (1 + expUp[0].value / 100)) + ((expQuest) * (1 + questUp[0].value/100))) * playtime[0].value;   //퀘스트 종료 후 얻는 경험치
     var nowExp = 0; //현재 경험치
@@ -304,15 +308,22 @@ function wantSelect(name, num){
 }
 
 //해당 던전 경험치를 더하는 함수
-function ExpAdd(name, num, run){
+function ExpAdd(name, num, run, party){
+    if(party == true)
+        partypenalty = 0.9;
+    else
+        partypenalty = 1;
+
     exp = 0;
     for(let i in Dungeon){
         if (document.getElementsByName(Dungeon[i][0]+name)[0].checked == true) {
             var rundungeon = document.getElementsByName(Dungeon[i][0]+run)[0].value;
-            exp += (Dungeon[i][num] * rundungeon);
+            if(name == "Monster")
+                exp += (Dungeon[i][num] * rundungeon * partypenalty)
+            else
+                exp += (Dungeon[i][num] * rundungeon);
         }
     }
-
     return exp;
 }
 
