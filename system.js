@@ -213,7 +213,7 @@ function awakeningAll(){
     }
     
 
-    alert('각성 105까지 도달한 정도 = ' + result + '%');
+    alert('각성 120까지 도달한 정도 = ' + result + '%');
 }
 
 //전체 초월레벨 계산하는 함수
