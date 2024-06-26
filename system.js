@@ -429,6 +429,6 @@ function howManyPlayAwakening(num){
     awakeningLevel[0].value = saveAwakeningLevel;
     awakeningLevelPercent[0].value = saveAwakeningLevelPercent;
 
-    alert("각성 " + wantAwakeningLevel[0].value + "까지 일퀘런 " + repeat + "회");
+    alert("각성 " + wantAwakeningLevel[0].value + "까지 경던 " + repeat + "회");
     
 }
