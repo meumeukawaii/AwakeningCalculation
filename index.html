@@ -18,11 +18,12 @@
             <a href = "https://gall.dcinside.com/mgallery/board/lists/?id=shynick" target = "blank" >https://gall.dcinside.com/mgallery/board/lists/?id=shynick<a><br>
             <div>
                 <p>
-                    각성 레벨 <input type="number" name="level" min="1" max="105" style="width: 70px;" value = 1>, 
+                    각성 레벨 <input type="number" name="level" min="1" max="120" style="width: 70px;" value = 1>, 
                     <input type="number" name="levelPercent" step="0.01" min="0" max= "100" style="width: 70px;" value = 0>%, 횟수 
                     <input type="number" name="playtime" min="0" max="9999" style="width: 70px;" value = 1>,
                     경획<input type="number" name="expUp" min="0" style="width: 70px;" value = 300>,
                     퀘보<input type="number" name="questUp" min="0" style="width: 70px;" value = 350>,
+                    경획(소환수)<input type="number" name="SummonexpUp" min="0" style="width: 70px;" value = 0>,
                     파티<input type ="checkbox" name="party2">                
                     <button onclick='awakeningUp(0)'>확인(각성)</button>
                     <button onclick='awakeningAll()'>전체각성은?</button>
@@ -32,6 +33,12 @@
                     <input type="number" name="ULevelPercent" step="0.01" min="0" max= "100" style="width: 70px;" value = 0>%
                     <button onclick='ULevelUp(0)'>확인(초월)</button>
                     <button onclick='ULevelAll()'>전체초월은?</button>
+                </p>
+                <p>
+                    소환수 레벨 <input type="number" name="SummonLevel" min="1" max="100" style="width: 70px;" value = 1>, 
+                    <input type="number" name="SummonLevelPercent" step="0.01" min="0" max= "100" style="width: 70px;" value = 0>%
+                    <button onclick='SummonUp(0)'>확인(소환수)</button>
+                    <button onclick='SummonAll()'>전체소환수는?</button>
                 </p>
             </div>
         </head>
@@ -57,10 +64,12 @@
                     <p>
                         <button onclick='SelectMadenDungeon(0)'>하드만 선택하기</button><button onclick='SelectMadenDungeon(1)'>하드만 선택하기(프 X)</button><br>
                         어디까지 가고싶나요?<br>
+                        각성<input type="number" name="wantAwakeningLevel" min="0" max="120" style="width: 70px;" value = 1><br>
+                        <button onclick='howManyPlayAwakening()'>확인</button><br>
                         초월<input type="number" name="wantULevel" min="0" max="9999" style="width: 70px;" value = 1><br>
                         <button onclick='howManyPlayULevel()'>확인</button><br>
-                        각성<input type="number" name="wantAwakeningLevel" min="0" max="105" style="width: 70px;" value = 1><br>
-                        <button onclick='howManyPlayAwakening()'>확인</button><br>
+                        소환수<input type="number" name="wantSummonLevel" min="0" max="100" style="width: 70px;" value = 1><br>
+                        <button onclick='howManyPlaySummon()'>확인</button><br>
                     </p>
 
                     
