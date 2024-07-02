@@ -1,41 +1,60 @@
 function makeTable(){
     //표 만드는 스크립트
     for(let i in Dungeon){
-        if(Dungeon[i][4] == 1){
+        if(Dungeon[i][5] == 1){
             document.write(
             "<tr>",
-                "<th>" + Dungeon[i][1] + "</th>",
-                "<th>",
+                "<td>" + Dungeon[i][1] + "</td>",
+                "<td>",
                     '<input type="checkbox" name="'+ Dungeon[i][0] +'Monster" value="'+ Dungeon[i][2] +'" checked> 몬스터',
-                "</th>",
-                "<th>",
+                "</td>",
+                "<td>",
                     '<input type="checkbox" name="'+ Dungeon[i][0] +'Quest" value="'+ Dungeon[i][3] +'" checked> 퀘스트',
-                "</th>",
-                "<th>",
+                "</td>",
+                "<td>",
                 '횟수 <input type="number" name="'+ Dungeon[i][0] +'run" min="0" max="9999" style="width: 70px;" value ="' + Dungeon[i][4] + '" >',
-                "</th>",
-                "<th>",
+                "</td>",
+                "<td>",
                      Dungeon[i][2],
-                "</th>",
+                "</td>",
+            "</tr>"
+        );
+        }
+        else if(Dungeon[i][5] == 10){   //라이티티아 전용
+            document.write(
+            "<tr>",
+                "<td bgcolor='#00AAFF'>" + Dungeon[i][1] + "</td>",
+                "<td bgcolor='#00AAFF'>",
+                    '<input type="checkbox" name="'+ Dungeon[i][0] +'Monster" value="'+ Dungeon[i][2] +'"> 몬스터',
+                "</td>",
+                "<td bgcolor='#00AAFF'>",
+                    '<input type="checkbox" name="'+ Dungeon[i][0] +'Quest" value="'+ Dungeon[i][3] +'" disabled> 퀘스트',
+                "</td>",
+                "<td bgcolor='#00AAFF'>",
+                '잡은 수 <input type="number" name="'+ Dungeon[i][0] +'run" min="0" max="9999" style="width: 70px;" value ="' + Dungeon[i][4] + '" >',
+                "</td>",
+                "<td bgcolor='#00AAFF'>",
+                     Dungeon[i][2],
+                "</td>",
             "</tr>"
         );
         }
         else{
             document.write(
         "<tr>",
-            "<th>" + Dungeon[i][1] + "</th>",
-            "<th>",
-                '<input type="checkbox" id = ' + Dungeon[i][7] + '" name="'+ Dungeon[i][0] +'Monster" value="'+ Dungeon[i][2] +'" checked> 몬스터',
-            "</th>",
-            "<th>",
-                '<input type="checkbox" id = ' + Dungeon[i][7] + '" name="'+ Dungeon[i][0] +'Quest" value="'+ Dungeon[i][3] +'" checked> 퀘스트',
-            "</th>",
-            "<th>",
+            "<td>" + Dungeon[i][1] + "</td>",
+            "<td>",
+                '<input type="checkbox" id = ' + Dungeon[i][7] + '" name="'+ Dungeon[i][0] +'Monster" value="'+ Dungeon[i][2] +'"> 몬스터',
+            "</td>",
+            "<td>",
+                '<input type="checkbox" id = ' + Dungeon[i][7] + '" name="'+ Dungeon[i][0] +'Quest" value="'+ Dungeon[i][3] +'"> 퀘스트',
+            "</td>",
+            "<td>",
             '횟수 <input type="number" name="'+ Dungeon[i][0] +'run" min="0" max="9999" style="width: 70px;" value ="' + Dungeon[i][4] + '" >',
-            "</th>",
-            "<th>",
+            "</td>",
+            "<td>",
                 Dungeon[i][2],
-            "</th>",
+            "</td>",
         "</tr>"
         );
         }                    
@@ -457,6 +476,18 @@ function SelectMadenDungeon(num){
         }
     }
     }
+
+    if(num == 2)
+        {
+            for (let i in Dungeon)
+            {
+                if(Dungeon[i][5] == 2)
+                {
+                    document.getElementsByName(Dungeon[i][0]+"Monster")[0].checked = true;
+                    document.getElementsByName(Dungeon[i][0]+"Quest")[0].checked = true;
+                }
+            }
+        }
 }
 
 //원하는 곳까지 자동으로 계산해주는 함수(초월)
