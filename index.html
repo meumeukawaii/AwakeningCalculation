@@ -10,13 +10,21 @@
     <body>
         <head>
             <h1>각성 계산기</h1>
-            각성 경험치 출처 <a href = "https://cafe.naver.com/lataledeal/269923" target = "blank" >라테일 피디아<a><br>
-            소환수 경험치 출처 <a href = "https://cafe.naver.com/lataledeal/268655" target = "blank" >라테일 피디아<a><br>
-            작동이 제대로 되지 않는다면 인터넷 사용기록에서 쿠키와 캐시된 이미지 및 파일을 지워주세요.<br>
-            경던은 4단계가 기본값이며 없다면 3단계입니다.<br>
-            일일퀘스트는 집계하지 않으며, 천공성의 경우 1바퀴 = 퀘스트 2개 클리어로 간주합니다<br>
-            소환수는 플레이어가 획득한 경험치의 33.333...%만 들어오며, 파티 패널티 여부는 확인하지 못해 솔플을 기준으로 계산합니다<br>
-            4단계 런을 할지 말지에 대한 내용은 <a href = "https://gall.dcinside.com/m/laf/22966" target = "blank" >여기서<a> 확인해주세요<br>
+            <details>
+                <summary>내용이 길어서 넣은 접어두기</summary>
+                <div>
+                    각성 경험치 출처 <a href = "https://cafe.naver.com/lataledeal/269923" target = "blank" >라테일 피디아<a><br>
+                    소환수 경험치 출처 <a href = "https://cafe.naver.com/lataledeal/268655" target = "blank" >라테일 피디아<a><br>
+                    초월2 경험치 출처 <a href = "https://gall.dcinside.com/m/laf/26677" target = "blank" >프리링(라테일) 갤러리<a><br>
+                    4단계 런을 할지 말지에 대한 내용은 <a href = "https://gall.dcinside.com/m/laf/22966" target = "blank" >여기서<a> 확인해주세요<br>
+                    작동이 제대로 되지 않는다면 인터넷 사용기록에서 쿠키와 캐시된 이미지 및 파일을 지워주세요.<br>
+                    경던은 4단계가 기본값이며 없다면 3단계입니다.<br>
+                    일일퀘스트는 집계하지 않으며, 천공성의 경우 1바퀴 = 퀘스트 2개 클리어로 간주합니다<br>
+                    소환수는 플레이어가 획득한 경험치의 33.333...%만 들어오며, 파티 패널티 여부는 확인하지 못해 솔플을 기준으로 계산합니다<br>
+                    문의 사항이 있으시다면 <a href = "http://gall.dcinside.com/mgallery/shynick" target = "blank" >샤이닉 갤러리<a>에 제보 부탁드립니다
+                </div>
+            </details>
+            초월2 입력은 소수점을 빼고 입력해주세요 ex) 54.21 = 5421
             <div>
                 <p>
                     횟수 <input type="number" name="playtime" min="0" max="9999" style="width: 70px;" value = 1>,
@@ -36,6 +44,12 @@
                     <input type="number" name="ULevelPercent" step="0.01" min="0" max= "100" style="width: 70px;" value = 0>%
                     <button onclick='ULevelUp(0)'>확인(초월)</button>
                     <button onclick='ULevelAll()'>전체초월은?</button>
+                </p>
+                <p>
+                    초월2 레벨 <input type="number" name="SLevel" min="1" max="10000" style="width: 70px;" value = 0>, 
+                    <input type="number" name="SLevelPercent" step="0.01" min="0" max= "100" style="width: 70px;" value = 0>%
+                    <button onclick='SLevelUp(0)'>확인(초월2)</button>
+                    <button onclick='SLevelAll()'>전체2초월은?</button>
                 </p>
                 <p>
                     소환수 레벨 <input type="number" name="SummonLevel" min="1" max="100" style="width: 70px;" value = 1>, 
@@ -72,6 +86,8 @@
                         <button onclick='howManyPlayAwakening()'>확인</button><br>
                         초월<input type="number" name="wantULevel" min="0" max="9999" style="width: 70px;" value = 1><br>
                         <button onclick='howManyPlayULevel()'>확인</button><br>
+                        초월2<input type="number" name="wantSLevel" min="0" max="10000" style="width: 70px;" value = 0><br>
+                        <button onclick='howManyPlaySLevel()'>확인</button><br>
                         소환수<input type="number" name="wantSummonLevel" min="0" max="100" style="width: 70px;" value = 1><br>
                         <button onclick='howManyPlaySummon()'>확인</button><br>
                     </p>
