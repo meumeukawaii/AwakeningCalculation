@@ -210,7 +210,6 @@ function SLevelUp(num){
     expQuest = ExpAdd("Quest", 3, "run", party2[0].checked);
 
     var exp_all = (((expMonster) * (1 + expUp[0].value / 100)) + ((expQuest) * (1 + questUp[0].value/100))) * playtime[0].value;   //퀘스트 종료 후 얻는 경험치
-
     var nextExp = (20000000000000 + 300000000000 * (SLevel[0].value * 0.01) - (20000000000000 + 300000000000 * (SLevel[0].value * 0.01)) * SLevelPercent[0].value / 100)   //현재 다음렙가기위해 필요한 경험치
     //이유는 모르겠는데 저거 -1 +1 안하면 값이 제대로 표기가 안됨
     if(nextExp > exp_all){  //이걸로 레벨이 1도 올라가지 않을 경우
@@ -244,7 +243,7 @@ function SLevelUp(num){
         resultLevelPercent = 0;
     }
     else{
-        var resultLevelPercent = (20000000000000 + 300000000000 * (resultLevel - 1 + 1) - nextExp) / (20000000000000 + 300000000000 * (resultLevel - 1 + 1)) * 100;
+        var resultLevelPercent = (20000000000000 + 300000000000 * 0.01 * (resultLevel - 1 + 1) - nextExp) / (20000000000000 + 300000000000 * 0.01 * (resultLevel - 1 + 1)) * 100;
     }
     if(num == 0){
         alert("Lv." + resultLevel / 100 + ", " + resultLevelPercent + "%");
@@ -385,7 +384,7 @@ function ULevelAll(){
     }
 
     //지금까지 얻은 경험치량
-    for(i = 1; i < ULevel[0].value; i++){   //내 레벨이 1일때를 생각해보자 -1 없으면 이 계산기 결과로는 1레벨에서 얻은 경험치는 400억이 되버림
+    for(i = 1; i <= ULevel[0].value; i++){   //내 레벨이 1일때를 생각해보자 -1 없으면 이 계산기 결과로는 1레벨에서 얻은 경험치는 400억이 되버림
         nowExp += 40000000000 + i * 100000000;
     }
 
@@ -422,13 +421,12 @@ function SLevelAll(){
     var result = 0; //도달한 초월렙의 결과
 
     //1~9999까지의 경험치량
-    for(i = 1; i < 9999; i++){ //레벨 오르는 횟수는 1부터 9999까지 
-        allExp += 20000000000000 + i * 300000000000;
+    for(i = 0; i < 10000; i++){ //레벨 오르는 횟수는 1부터 9999까지 
+        allExp += 20000000000000 + i * 300000000000 * 0.01;
     }
-
     //지금까지 얻은 경험치량
-    for(i = 1; i < SLevel[0].value; i++){   //내 레벨이 1일때를 생각해보자 -1 없으면 이 계산기 결과로는 1레벨에서 얻은 경험치는 400억이 되버림
-        nowExp += 20000000000000 + i * 300000000000;
+    for(i = 0; i <= SLevel[0].value; i++){   //내 레벨이 1일때를 생각해보자 -1 없으면 이 계산기 결과로는 1레벨에서 얻은 경험치는 400억이 되버림
+        nowExp += 20000000000000 + i * 300000000000 * 0.01;
     }
 
     nowExp += SLevelPercent[0].value / 100 * (20000000000000 + 300000000000 * SLevel[0].value);   //초월렙 %까지 추가한 곳 레벨1의 50%를 생각할것
