@@ -192,6 +192,69 @@ function ULevelUp(num){
 
 }
 
+function SLevelUp(num){ 
+    var SLevel = document.getElementsByName("SLevel");                //내 초월 레벨
+    var SLevelPercent = document.getElementsByName("SLevelPercent");  //내 초월 레벨 %
+    var playtime = document.getElementsByName("playtime");          //전체 횟수(캐릭터)
+    var expUp = document.getElementsByName("expUp");
+    var questUp = document.getElementsByName("questUp");            //퀘보업
+    var party2 = document.getElementsByName("party2");
+
+    var expMonster=0;    //몬스터 경험치 저장소
+    var expQuest=0;    //퀘스트 경험치 저장소
+    var levelUp = 0;    //레벨업 저장소
+
+    //잡몹
+    expMonster = ExpAdd("Monster", 2, "run", party2[0].checked);
+    //중보
+    expQuest = ExpAdd("Quest", 3, "run", party2[0].checked);
+
+    var exp_all = (((expMonster) * (1 + expUp[0].value / 100)) + ((expQuest) * (1 + questUp[0].value/100))) * playtime[0].value;   //퀘스트 종료 후 얻는 경험치
+
+    var nextExp = (20000000000000 + 300000000000 * (SLevel[0].value - 1 + 1) - (20000000000000 + 300000000000 * (SLevel[0].value - 1 + 1)) * SLevelPercent[0].value / 100)   //현재 다음렙가기위해 필요한 경험치
+    //이유는 모르겠는데 저거 -1 +1 안하면 값이 제대로 표기가 안됨
+    if(nextExp > exp_all){  //이걸로 레벨이 1도 올라가지 않을 경우
+        nextExp -= exp_all;
+        exp_all = 0;
+    }
+    else if(nextExp == exp_all){    //이걸로 레벨이 정확히 1 올라가는 경우 -의미가 있나 싶긴한데...
+        nextExp += exp_all
+        exp_all = 0;
+        nextExp = 0;
+        levelUp++;
+    }
+    else{   //이걸로 레벨이 1 이상 올라가는 경우
+        exp_all = exp_all - nextExp;
+        levelUp++;
+        
+        for(i = SLevel[0].value - 1 + 2; i < 9999; i++){ //한번 레벨 올라갔으므로 +1 된 상태임 이유는 모르겠는데 저렇게 안하면 제대로 표기가 안됨
+            if(exp_all < (20000000000000 + 300000000000 * i)){
+                nextExp = (20000000000000 + 300000000000 * i) - exp_all;
+                break;
+            }
+            else{
+                exp_all = exp_all - (20000000000000 + 300000000000 * i);
+                levelUp++;
+            }
+        }
+    }
+    
+    var resultLevel = SLevel[0].value - (levelUp * -1);
+    if(resultLevel == 9999){    //여기서부턴 의미 없어보이므로 남은 경험치는 표기 X
+        resultLevelPercent = 0;
+    }
+    else{
+        var resultLevelPercent = (20000000000000 + 300000000000 * (resultLevel - 1 + 1) - nextExp) / (20000000000000 + 300000000000 * (resultLevel - 1)) * 100;
+    }
+    if(num == 0){
+        alert("Lv." + resultLevel + ", " + resultLevelPercent + "%");
+    }
+    else if(num == 1){
+        SLevel[0].value = resultLevel;
+        SLevelPercent[0].value = resultLevelPercent;
+    }
+
+}
 
 //소환수 레벨 계산하는 함수
 function SummonUp(num){
@@ -335,6 +398,48 @@ function ULevelAll(){
     
 
     alert('초월 9999까지 도달한 정도 = ' + result + '%');
+}
+
+function SLevelAll(){
+    var SLevel = document.getElementsByName("SLevel");                //내 초월 레벨
+    var SLevelPercent = document.getElementsByName("SLevelPercent");  //내 초월 레벨 %
+    var playtime = document.getElementsByName("playtime");          //전체 횟수(캐릭터)
+    var expUp = document.getElementsByName("expUp");
+    var questUp = document.getElementsByName("questUp");            //퀘보업
+    var party2 = document.getElementsByName("party2");
+
+    var expMonster=0;    //몬스터 경험치 저장소
+    var expQuest=0;    //퀘스트 경험치 저장소
+
+    //잡몹
+    expMonster = ExpAdd("Monster", 2, "run", party2[0].checked);
+    //중보
+    expQuest = ExpAdd("Quest", 3, "run", party2[0].checked);
+
+    var exp_all = (((expMonster) * (1 + expUp[0].value / 100)) + ((expQuest) * (1 + questUp[0].value/100))) * playtime[0].value;   //퀘스트 종료 후 얻는 경험치
+    var nowExp = 0; //현재 경험치
+    var allExp = 0; //1~9999까지의 경험치량
+    var result = 0; //도달한 초월렙의 결과
+
+    //1~9999까지의 경험치량
+    for(i = 1; i < 9999; i++){ //레벨 오르는 횟수는 1부터 9999까지 
+        allExp += 20000000000000 + i * 300000000000;
+    }
+
+    //지금까지 얻은 경험치량
+    for(i = 1; i < SLevel[0].value; i++){   //내 레벨이 1일때를 생각해보자 -1 없으면 이 계산기 결과로는 1레벨에서 얻은 경험치는 400억이 되버림
+        nowExp += 20000000000000 + i * 300000000000;
+    }
+
+    nowExp += SLevelPercent[0].value / 100 * (20000000000000 + 300000000000 * SLevel[0].value);   //초월렙 %까지 추가한 곳 레벨1의 50%를 생각할것
+    nowExp += exp_all;  //퀘스트 종료 후에 얻은 곳 까지 포함한것
+    result = nowExp/allExp*100;
+    if(result >= 100){
+        result = 100;
+    }
+    
+
+    alert('초월2 9999까지 도달한 정도 = ' + result + '%');
 }
 
 //전체 소환수레벨 계산하는 함수
@@ -525,6 +630,42 @@ function howManyPlayULevel(){
     ULevelPercent[0].value = saveULevelPercent;
 
     alert("초월 " + wantULevel[0].value + "까지 경던 " +repeat + "회");
+}
+//초월 2 전용
+function howManyPlaySLevel(){  
+    repeat = 0; //반복 횟수
+
+    var SLevel = document.getElementsByName("SLevel");                          //내 레벨
+    var SLevelPercent = document.getElementsByName("SLevelPercent");            //내 초월 레벨 %
+    var wantSLevel = document.getElementsByName("wantSLevel");                  //원하는 초월 레벨
+    var playtime = document.getElementsByName("playtime");          //도는 횟수
+    var party2 = document.getElementsByName("party2");
+
+    var saveSLevel = SLevel[0].value;   //초월렙 세이브용
+    var saveSLevelPercent = SLevelPercent[0].value;   //초월렙% 세이브용
+
+    if(wantSLevel[0].value > 9999){
+        wantSLevel[0].value = 9999;
+        alert("그러다 사이트 팅겨요...")
+    }
+
+    playtime[0].value = 1;  //무조건 1 고정해야 횟수가 나올 수 있음
+
+    if(ExpAdd("Monster", 2, "run", party2[0].checked) <= 0 && ExpAdd("Quest", 3, "run", party2[0].checked) <= 0)//아무것도 체크 안했을 때 튕김 방지
+    {
+        alert("몬스터 또는 퀘스트에 하나라도 체크해주세요");
+        return; 
+    }
+    while(wantSLevel[0].value + 1 - 1 > SLevel[0].value + 1 - 1){   //이유는 모르겠는데 +1 -1로 안하면 숫자로 감지를 안하는듯...
+        SLevelUp(1);
+        repeat++;
+    }
+
+    //처음에 쓴 값 되돌리는 곳
+    SLevel[0].value = saveSLevel;
+    SLevelPercent[0].value = saveSLevelPercent;
+
+    alert("초월2 " + wantSLevel[0].value + "까지 경던 " +repeat + "회");
 }
 
 //원하는 곳까지 자동으로 계산해주는 함수(각성)
