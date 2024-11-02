@@ -25,14 +25,16 @@
                     <a href = "https://gall.dcinside.com/m/laf/43840" target = "blank" >마리수 및 경험치 확인용 글<a>
                 </div>
             </details>
-            초월2 입력은 소수점을 빼고 입력해주세요 ex) 54.21 = 5421
+            초월2 입력은 소수점을 빼고 입력해주세요 ex) 54.21 = 5421 <br>
+            마리수 예상은 대충 잡고 넘어가는 케이스를 생각하여 0.9~1배로 가정합니다
             <div>
                 <p>
                     횟수 <input type="number" name="playtime" min="0" max="9999" style="width: 70px;" value = 1>,
                     경획<input type="number" name="expUp" min="0" style="width: 70px;" value = 300>,
                     퀘보<input type="number" name="questUp" min="0" style="width: 70px;" value = 350>,
                     경획(소환수)<input type="number" name="SummonexpUp" min="0" style="width: 70px;" value = 0>,
-                    파티<input type ="checkbox" name="party2">    
+                    파티<input type ="checkbox" name="party2"> 
+                    <button onclick='CountMonster()'>잡은 수 확인하기</button>   
                 </p>
                 <p>
                     각성 레벨 <input type="number" name="level" min="1" max="120" style="width: 70px;" value = 1>, 
@@ -61,15 +63,16 @@
             </div>
         </head>
         <section>
-            <span style="width:650px; float:left;">
+            <span style="float:left;">
                     <!--표 만드는 코드-->
-                    <table border="1" style="width:95%">
+                    <table border="1">
                         <tr>
                             <td></td>
                             <td><center><button style="width:81px;" onclick='wantSelect("Monster", 9999)'>모두 선택</button><br><button onclick='reset("Monster")' style="width:81px;">리셋</button><br></center></td>
                             <td><center><button style="width:81px;" onclick='wantSelect("Quest", 9999)'>모두 선택</button><br><button onclick='reset("Quest")' style="width:81px;">리셋</button></center></td>
                             <td><center>횟수</center></td>
                             <td><center>경험치 양</center></td>
+                            <td><center>몹 수</center></td>
                         </tr>
                         <script>
                             makeTable();                 
