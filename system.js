@@ -1,7 +1,7 @@
 function makeTable(){
     //표 만드는 스크립트
     for(let i in Dungeon){
-        if(Dungeon[i][5] == 1){
+        if(Dungeon[i][6] == 1){
             document.write(
             "<tr>",
                 "<td>" + Dungeon[i][1] + "</td>",
@@ -17,10 +17,13 @@ function makeTable(){
                 "<td>",
                      Dungeon[i][2],
                 "</td>",
+                "<td>",
+                    Dungeon[i][5],
+                "</td>",
             "</tr>"
         );
         }
-        else if(Dungeon[i][5] == 10){   //라이티티아 전용
+        else if(Dungeon[i][6] == 10){   //라이티티아 전용
             document.write(
             "<tr>",
                 "<td bgcolor='#00AAFF'>" + Dungeon[i][1] + "</td>",
@@ -35,6 +38,8 @@ function makeTable(){
                 "</td>",
                 "<td bgcolor='#00AAFF'>",
                      Dungeon[i][2],
+                "</td>",
+                "<td bgcolor='#00AAFF'>",
                 "</td>",
             "</tr>"
         );
@@ -54,6 +59,9 @@ function makeTable(){
             "</td>",
             "<td>",
                 Dungeon[i][2],
+            "</td>",
+            "<td>",
+            Dungeon[i][5],
             "</td>",
         "</tr>"
         );
@@ -752,5 +760,16 @@ function howManyPlaySummon(num){
     levelPercent[0].value = saveSummonLevelPercent;
 
     alert("소환수 " + wantSummonLevel[0].value + "까지 경던 " + repeat + "회");
-    
+}
+
+function CountMonster()
+{
+    var count = 0;
+    for(let i in Dungeon){
+        if (document.getElementsByName(Dungeon[i][0]+"Monster")[0].checked == true) {
+            var rundungeon = document.getElementsByName(Dungeon[i][0]+"run")[0].value;
+            count += (Dungeon[i][5] * rundungeon)
+        }
+    }
+    alert("잡은 수 예상: " + count * 0.9 + "~"+ count);
 }
