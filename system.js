@@ -570,7 +570,7 @@ function SelectMadenDungeon(num){
     {
         for (let i in Dungeon)
         {
-            if(Dungeon[i][5] == 1)
+            if(Dungeon[i][6] == 1)
             {
                 document.getElementsByName(Dungeon[i][0]+"Monster")[0].checked = true;
                 document.getElementsByName(Dungeon[i][0]+"Quest")[0].checked = true;
@@ -582,7 +582,7 @@ function SelectMadenDungeon(num){
     {
         for (let i in Dungeon)
     {
-        if(Dungeon[i][5] == 1)
+        if(Dungeon[i][6] == 1)
         {
             if(Dungeon[i][0] == 'priringgarden')
             {
@@ -598,7 +598,7 @@ function SelectMadenDungeon(num){
         {
             for (let i in Dungeon)
             {
-                if(Dungeon[i][5] == 2)
+                if(Dungeon[i][6] == 2)
                 {
                     document.getElementsByName(Dungeon[i][0]+"Monster")[0].checked = true;
                     document.getElementsByName(Dungeon[i][0]+"Quest")[0].checked = true;
