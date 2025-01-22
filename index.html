@@ -50,6 +50,12 @@
                     <button onclick='ULevelAll()'>전체초월은?</button>
                 </p>
                 <p>
+                    각성2 레벨 <input type="number" name="level2" min="1" max="120" style="width: 70px;" value = 1>, 
+                    <input type="number" name="level2Percent" step="0.01" min="0" max= "100" style="width: 70px;" value = 0>% 
+                    <button onclick='awakening2Up(0)'>확인(각성2)</button>
+                    <button onclick='awakening2All()'>전체각성2은?</button>
+                </p>
+                <p>
                     초월2 레벨 <input type="number" name="SLevel" min="1" max="10000" style="width: 70px;" value = 0>, 
                     <input type="number" name="SLevelPercent" step="0.01" min="0" max= "100" style="width: 70px;" value = 0>%
                     <button onclick='SLevelUp(0)'>확인(초월2)</button>
@@ -91,6 +97,8 @@
                         <button onclick='howManyPlayAwakening()'>확인</button><br>
                         초월<input type="number" name="wantULevel" min="0" max="9999" style="width: 70px;" value = 1><br>
                         <button onclick='howManyPlayULevel()'>확인</button><br>
+                        각성2<input type="number" name="wantAwakeningLevel2" min="0" max="120" style="width: 70px;" value = 1><br>
+                        <button onclick='howManyPlayAwakening2()'>확인</button><br>
                         초월2<input type="number" name="wantSLevel" min="0" max="10000" style="width: 70px;" value = 0><br>
                         <button onclick='howManyPlaySLevel()'>확인</button><br>
                         소환수<input type="number" name="wantSummonLevel" min="0" max="100" style="width: 70px;" value = 1><br>
