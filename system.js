@@ -200,6 +200,70 @@ function ULevelUp(num){
 
 }
 
+function awakening2Up(num){
+    var level2 = document.getElementsByName("level2");                //내 각성 레벨
+    var level2Percent = document.getElementsByName("level2Percent");  //내 가성 레벨 %
+    var playtime = document.getElementsByName("playtime");          //전체 횟수(캐릭터)
+    var expUp = document.getElementsByName("expUp");
+    var questUp = document.getElementsByName("questUp");            //퀘보업
+    var party2 = document.getElementsByName("party2");              //파티여부
+
+    var expMonster=0;    //몬스터 경험치 저장소
+    var expQuest=0;    //퀘스트 경험치 저장소
+    var level2Up = 0;    //레벨업 저장소
+
+    //몬스터
+    expMonster = Math.floor(ExpAdd("Monster", 2, "run", party2[0].checked)/1000000);
+    //퀘스트
+    expQuest = Math.floor(ExpAdd("Quest", 3, "run", party2[0].checked)/1000000);
+
+    var exp_all = (((expMonster) * (1 + expUp[0].value / 100)) + ((expQuest) * (1 + questUp[0].value/100))) * playtime[0].value;   //퀘스트 종료 후 얻는 경험치
+    var nextExp = Level2[level2[0].value - 1][1] - (Level2[level2[0].value - 1][1] * (level2Percent[0].value / 100));   //현재 다음렙가기위해 필요한 경험치
+    if(nextExp > exp_all){  //이걸로 레벨이 1도 올라가지 않을 경우
+        nextExp -= exp_all;
+        exp_all = 0;
+    }
+    else if(nextExp == exp_all){    //이걸로 레벨이 정확히 1 올라가는 경우 -의미가 있나 싶긴한데...
+        nextExp += exp_all
+        exp_all = 0;
+        nextExp = 0;
+        level2Up++;
+    }
+    else{   //이걸로 레벨이 1 이상 올라가는 경우
+        exp_all = exp_all - nextExp;
+        level2Up++;
+        
+        for(i = level2[0].value; i < Level2.length; i++){ //한번 레벨 올라갔으므로 +1 된 상태임
+            if(exp_all < Level2[i][1]){
+                nextExp = Level2[i][1] - exp_all;
+                break;
+            }
+            else{
+                exp_all = exp_all - Level2[i][1];
+                level2Up++;
+            }
+        }
+    }
+    var resultLevel2 = level2[0].value - (level2Up * -1);
+    
+    if(resultLevel2 >= Level2.length){
+        resultLevel2Percent = 0;
+        resultLevel2 = Level2.length;
+    }
+    else{
+        var resultLevel2Percent = (Level2[resultLevel2 - 1][1] - nextExp) / Level2[resultLevel2 - 1][1] * 100;
+    }
+    if(num == 0){   //0이라면 바로 알리는 곳
+        alert("Lv." + resultLevel2 + ", " + resultLevel2Percent + "%");
+    }
+    else if(num == 1)   //1이라면 반복하는곳
+    {
+        level2[0].value = resultLevel2;
+        level2Percent[0].value = resultLevel2Percent
+    }
+
+}
+
 function SLevelUp(num){ 
     var SLevel = document.getElementsByName("SLevel");                //내 초월 레벨
     var SLevelPercent = document.getElementsByName("SLevelPercent");  //내 초월 레벨 %
@@ -409,6 +473,49 @@ function ULevelAll(){
     
 
     alert('초월 9999까지 도달한 정도 = ' + result + '%');
+}
+
+//전체 각성2레벨 계산하는 함수
+function awakening2All(){
+    var level2 = document.getElementsByName("level2");                //내 각성 레벨
+    var level2Percent = document.getElementsByName("level2Percent");  //내 가성 레벨 %
+    var playtime = document.getElementsByName("playtime");          //전체 횟수(캐릭터)
+    var expUp = document.getElementsByName("expUp");
+    var questUp = document.getElementsByName("questUp");            //퀘보업
+    var party2 = document.getElementsByName("party2");
+
+    var expMonster=0;    //몬스터 경험치 저장소
+    var expQuest=0;    //퀘스트 경험치 저장소
+
+    //잡몹
+    expMonster = ExpAdd("Monster", 2, "run", party2[0].checked)/1000000;
+    //중보
+    expQuest = ExpAdd("Quest", 3, "run", party2[0].checked)/1000000;
+
+    var exp_all = (((expMonster) * (1 + expUp[0].value / 100)) + ((expQuest) * (1 + questUp[0].value/100))) * playtime[0].value;   //퀘스트 종료 후 얻는 경험치
+    var nowExp = 0; //현재 경험치
+    var allExp = 0; //1~100까지의 경험치량
+    var result = 0; //도달한 각성렙의 결과
+
+    //1~100까지의 경험치량
+    for(i = 0; i < Level2.length - 1; i++){ //Level2[i][1]에서 Level2[99][1]의 경험치는 100에서 다음으로 가기 위한 경험치량을 임의표기한것임 99가 들어가면 안됨
+        allExp += Level2[i][1];
+    }
+
+    //지금까지 얻은 경험치량 - 현재 % 제외
+    for(i = 0; i < level2[0].value - 1; i++){   //내 레벨이 3일때를 생각해보자 -1 없으면 2가 포함되는건데 Level2[2][1]은 3레벨 모든 경험치를 얻게된것임
+        nowExp += Level2[i][1];
+    }
+
+    nowExp += level2Percent[0].value / 100 * (Level2[level2[0].value - 1][1]);   //입력값을 3으로 가정하고 생각해볼것
+    nowExp += exp_all;  //퀘스트 종료 후에 얻은 곳 까지 포함한것
+    result = nowExp/allExp*100;
+    if(result >= 100){
+        result = 100;
+    }
+    
+
+    alert('각성2 100까지 도달한 정도 = ' + result + '%');
 }
 
 function SLevelAll(){
@@ -725,6 +832,53 @@ function howManyPlayAwakening(num){
     awakeningLevelPercent[0].value = saveAwakeningLevelPercent;
 
     alert("각성 " + wantAwakeningLevel[0].value + "까지 경던 " + repeat + "회");
+    
+}
+
+//각2 원하는 곳 확인
+function howManyPlayAwakening2(num){  
+    repeat = 0; //반복 횟수
+
+    //각성 1인데 초월 4000인 사람 있고 1500인 사람 있고 이래서 어찌됐건 얘도 있어야됨 
+    var ULevel = document.getElementsByName("ULevel");                      //내 초월 레벨
+    var ULevelPercent = document.getElementsByName("ULevelPercent");        //내 초월 레벨 %
+    var awakeningLevel2 = document.getElementsByName("level2");                                       //내 각성 레벨
+    var awakeningLevel2Percent = document.getElementsByName("level2Percent");                         //내 각성 레벨 %
+    var wantAwakeningLevel2 = document.getElementsByName("wantAwakeningLevel2");                  //원하는 각성 레벨
+    var playtime = document.getElementsByName("playtime");          //도는 횟수
+    var party2 = document.getElementsByName("party2");
+
+    var saveULevel = ULevel[0].value;   //초월렙 세이브용
+    var saveULevelPercent = ULevelPercent[0].value;   //초월렙 세이브용
+    var saveAwakeningLevel2 = awakeningLevel2[0].value;                   //각성렙 세이브용
+    var saveAwakeningLevel2Percent = awakeningLevel2Percent[0].value;     //각성렙 세이브용
+
+    if(wantAwakeningLevel2[0].value > Level2.length){
+        wantAwakeningLevel2[0].value = Level2.length;
+        alert("그러다 사이트 팅겨요...")
+    }
+
+    playtime[0].value = 1;  //무조건 1 고정해야 횟수가 나올 수 있음
+
+    if(ExpAdd("Monster", 2, "run", party2[0].checked) <= 0 && ExpAdd("Quest", 3, "run", party2[0].checked) <= 0)//아무것도 체크 안했을 때 튕김 방지
+    {
+        alert("몬스터 또는 퀘스트에 하나라도 체크해주세요");
+        return; 
+    }
+    while(wantAwakeningLevel2[0].value + 1 - 1 > awakeningLevel2[0].value + 1 - 1){   //이유는 모르겠는데 +1 -1로 안하면 숫자로 감지를 안하는듯...
+            ULevelUp(1);
+            awakening2Up(1);
+            repeat++;
+    }
+
+
+    //처음에 쓴 값 되돌리는 곳
+    ULevel[0].value = saveULevel;
+    ULevelPercent[0].value = saveULevelPercent;
+    awakeningLevel2[0].value = saveAwakeningLevel2;
+    awakeningLevel2Percent[0].value = saveAwakeningLevel2Percent;
+
+    alert("각성2 " + wantAwakeningLevel2[0].value + "까지 경던 " + repeat + "회");
     
 }
 
