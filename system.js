@@ -52,7 +52,7 @@ function makeTable(){
                     '<input type="checkbox" name="'+ Dungeon[i][0] +'Monster" value="'+ Dungeon[i][2] +'"> 몬스터',
                 "</td>",
                 "<td bgcolor='#FF9696'>",
-                    '<input type="checkbox" name="'+ Dungeon[i][0] +'Quest" value="'+ Dungeon[i][3] +'" disabled> 퀘스트',
+                    '<input type="checkbox" name="'+ Dungeon[i][0] +'Quest" value="'+ Dungeon[i][3] +'"> 퀘스트',
                 "</td>",
                 "<td bgcolor='#FF9696'>",
                 '횟수 <input type="number" name="'+ Dungeon[i][0] +'run" min="0" max="9999" style="width: 70px;" value ="' + Dungeon[i][4] + '" >',
@@ -965,3 +965,4 @@ function CountMonster()
     }
     alert("잡은 수 예상: " + count * 0.9 + "~"+ count);
 }
+
