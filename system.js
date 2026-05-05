@@ -716,7 +716,17 @@ function SelectMadenDungeon(num){
             document.getElementsByName(Dungeon[i][0]+"Quest")[0].checked = true;
         }
     }
+
     }
+    
+    if(num == 5)
+    {
+        for (let i in Dungeon)
+        {
+            SelectDungeonjs(i, 5);
+        }
+    }
+
     switch(num)
     {
         case 2: //에~고
